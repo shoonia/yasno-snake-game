@@ -1,43 +1,14 @@
 import { jsx, useText } from 'jsx-dom-runtime';
 
-const enum Mode {
-  Easy = 'Easy',
-  Hard = 'Hard',
-}
-
-const enum Dir {
-  Empty = 0,
-  Up = 1,
-  Down = 2,
-  Left = 3,
-  Right = 4,
-}
-
-interface IPoint {
-  x: number;
-  y: number;
-}
-
-interface IState {
-  cellSize: 18 | 24;
-  step: number;
-  stepMax: number;
-  scopeCount: number;
-  mode: Mode;
-  x: number;
-  y: number;
-  dirX: number;
-  dirY: number;
-  maxBodySize: number;
-  items: IPoint[];
-  dir: Dir;
-}
+import type { IState, IPoint } from './types';
+import { Dir, Mode } from './types';
+import { delay, randomInt } from './utils';
 
 const state: IState = {
   cellSize: 24,
   step: 0,
   stepMax: 7,
-  scopeCount: 0,
+  scope: 0,
   mode: Mode.Easy,
   x: 24,
   y: 24,
@@ -48,7 +19,7 @@ const state: IState = {
   dir: Dir.Empty,
 };
 
-const [scope, setScope] = useText(0);
+const [scope, setScope] = useText(state.scope);
 const [textMode, setMode] = useText<Mode>(state.mode);
 
 const canvas = jsx('canvas', {
@@ -93,10 +64,14 @@ const ready = () => {
   restart();
 };
 
-const delay = () => new Promise((resolve) => setTimeout(resolve, 25));
+const drawFood = (i: IPoint) =>
+  ctx.drawImage(img, i.x, i.y, state.cellSize, state.cellSize);
+
+const drawBomb = (i: IPoint) =>
+  ctx.drawImage(bombImg, i.x, i.y, state.cellSize, state.cellSize);
 
 const gameLoop = async () => {
-  await delay();
+  await delay(25);
   requestAnimationFrame(gameLoop);
 
   if (++state.step < state.stepMax) {
@@ -117,17 +92,37 @@ const gameLoop = async () => {
   }
 };
 
-function restart() {
+const setRandomFood = () => {
+  food.x = randomInt(0, canvas.width / state.cellSize) * state.cellSize;
+  food.y = randomInt(0, canvas.height / state.cellSize) * state.cellSize;
+
+  drawFood(food);
+
+  if (state.mode === Mode.Hard) {
+    const chance = randomInt(1, 5) === 3;
+
+    bomb.x = chance ? randomInt(0, canvas.width / state.cellSize) * state.cellSize : -state.cellSize;
+    bomb.y = chance ? randomInt(0, canvas.height / state.cellSize) * state.cellSize : -state.cellSize;
+
+    drawBomb(bomb);
+  }
+};
+
+const audioPlay = (name: 'end' | 'turn' | 'hit' | 'add') => {
+  console.log(name);
+};
+
+const restart =() => {
   state.stepMax = 6;
-  state.scopeCount = 0;
+  state.scope = 0;
   state.dir = Dir.Empty;
   state.x = state.y = state.cellSize;
   state.dirX = state.dirY = 0;
   state.items = [];
   state.maxBodySize = 1;
-  setScope(state.scopeCount);
+  setScope(state.scope);
   setRandomFood();
-}
+};
 
 const checkBorder = () => {
   if (state.x < 0) {
@@ -149,7 +144,7 @@ const withoutBorder = () => {
   }
 };
 
-function drawSnake() {
+const drawSnake = () => {
   state.x += state.dirX;
   state.y += state.dirY;
 
@@ -171,21 +166,21 @@ function drawSnake() {
     if (e.x === food.x && e.y === food.y) {
       audioPlay('add');
       setRandomFood();
-      setScope(++state.scopeCount);
-      state.stepMax = state.scopeCount > 15 ? 5 : 6;
+      setScope(++state.scope);
+      state.stepMax = state.scope > 15 ? 5 : 6;
       state.maxBodySize++;
     }
 
     if (state.mode === Mode.Hard) {
       if (e.x === bomb.x && e.y === bomb.y) {
-        if (state.scopeCount >= 2) {
+        if (state.scope >= 2) {
           audioPlay('hit');
-          state.scopeCount = Math.ceil(state.scopeCount / 2);
-          state.maxBodySize = state.scopeCount + 1;
+          state.scope = Math.ceil(state.scope / 2);
+          state.maxBodySize = state.scope + 1;
           for (let i = 0; i < state.maxBodySize; i++) {
             state.items.pop();
           }
-          setScope(state.scopeCount);
+          setScope(state.scope);
           setRandomFood();
         } else {
           audioPlay('end');
@@ -194,7 +189,6 @@ function drawSnake() {
       }
     }
 
-    // Checking if the state has touched the tail
     for (let i = index + 1; i < state.items.length; i++) {
       const s = state.items[i];
 
@@ -204,49 +198,84 @@ function drawSnake() {
       }
     }
   });
-}
+};
 
-const drawFood = (i: IPoint) =>
-  ctx.drawImage(img, i.x, i.y, state.cellSize, state.cellSize);
-
-const drawBomb = (i: IPoint) =>
-  ctx.drawImage(bombImg, i.x, i.y, state.cellSize, state.cellSize);
-
-function turnUp() {
+const turnUp = () => {
   if (state.dir !== Dir.Down) {
     audioPlay('turn');
     state.dir = Dir.Up;
     state.dirY = -state.cellSize;
     state.dirX = 0;
   }
-}
+};
 
-function turnLeft() {
+const turnLeft = () => {
   if (state.dir !== Dir.Right) {
     audioPlay('turn');
     state.dir = Dir.Left;
     state.dirX = -state.cellSize;
     state.dirY = 0;
   }
-}
+};
 
-function turnDown() {
+const turnDown = () => {
   if (state.dir !== Dir.Up) {
     audioPlay('turn');
     state.dir = Dir.Down;
     state.dirY = state.cellSize;
     state.dirX = 0;
   }
-}
+};
 
-function turnRight() {
+const turnRight = () => {
   if (state.dir !== Dir.Left) {
     audioPlay('turn');
     state.dir = Dir.Right;
     state.dirX = state.cellSize;
     state.dirY = 0;
   }
-}
+};
+
+const changeDifficulty: JSX.EventListener = () => {
+  if (state.mode === Mode.Easy) {
+    setMode(state.mode = Mode.Hard);
+  } else {
+    setMode(state.mode = Mode.Easy);
+  }
+
+  restart();
+};
+
+let x1: number | null, y1: number | null;
+
+document.addEventListener('touchstart', (event) => {
+  const firstTouch = event.touches[0];
+  x1 = firstTouch.clientX;
+  y1 = firstTouch.clientY;
+});
+
+document.addEventListener('touchmove', (event) => {
+  if (!x1 || !y1) {
+    return false;
+  }
+
+  const x2 = event.touches[0].clientX;
+  const y2 = event.touches[0].clientY;
+
+  const xDiff = x2 - x1;
+  const yDiff = y2 - y1;
+
+  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    // swipe left or right
+    xDiff > 0 ? turnRight() : turnLeft();
+  } else {
+    // swipe up or down
+    yDiff < 0 ? turnUp() : turnDown();
+  }
+
+  x1 = null;
+  y1 = null;
+});
 
 document.addEventListener('keydown', (event) => {
   switch (event.keyCode) {
@@ -261,94 +290,21 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-{
-  let x1: number | null;
-  let y1: number | null;
-
-  document.addEventListener('touchstart', (event) => {
-    const firstTouch = event.touches[0];
-    x1 = firstTouch.clientX;
-    y1 = firstTouch.clientY;
-  });
-
-  document.addEventListener('touchmove', (event) => {
-    if (!x1 || !y1) {
-      return false;
-    }
-
-    const x2 = event.touches[0].clientX;
-    const y2 = event.touches[0].clientY;
-
-    const xDiff = x2 - x1;
-    const yDiff = y2 - y1;
-
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-      // swipe left or right
-      xDiff > 0 ? turnRight() : turnLeft();
-    } else {
-      // swipe up or down
-      yDiff < 0 ? turnUp() : turnDown();
-    }
-
-    x1 = null;
-    y1 = null;
-  });
-}
-
-
-const changeDifficulty: JSX.EventListener = () => {
-  if (state.mode === Mode.Easy) {
-    setMode(state.mode = Mode.Hard);
-  } else {
-    setMode(state.mode = Mode.Easy);
-  }
-
-  restart();
-};
-
-
-function randomInt(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
-
-function setRandomFood() {
-  food.x = randomInt(0, canvas.width / state.cellSize) * state.cellSize;
-  food.y = randomInt(0, canvas.height / state.cellSize) * state.cellSize;
-
-  drawFood(food);
-
-  if (state.mode === Mode.Hard) {
-    const chance = randomInt(1, 5) === 3;
-
-    bomb.x = chance ? randomInt(0, canvas.width / state.cellSize) * state.cellSize : -state.cellSize;
-    bomb.y = chance ? randomInt(0, canvas.height / state.cellSize) * state.cellSize : -state.cellSize;
-
-    drawBomb(bomb);
-  }
-}
-
-function audioPlay(name: 'end' | 'turn' | 'hit' | 'add') {
-  console.log(name);
-}
-
 document.body.append(
   <div class="wrapper" ref={ready}>
-    <div>
-      <ul>
-        <li>
-          Score: {scope}
-        </li>
-        <li>
-          Difficulty: {textMode}
-          <button type="button" on:click={changeDifficulty}>
-            Change
-          </button>
-        </li>
-      </ul>
-    </div>
+    <ul>
+      <li>Score: {scope}</li>
+      <li>
+        Difficulty: {textMode}
+        <button type="button" on:click={changeDifficulty}>
+          Change
+        </button>
+      </li>
+    </ul>
     {canvas}
   </div>,
 );
 
 window.addEventListener('resize', ready, { passive: true });
 requestAnimationFrame(gameLoop);
+turnRight();
