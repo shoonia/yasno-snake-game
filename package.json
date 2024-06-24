@@ -1,0 +1,41 @@
+{
+  "name": "yasno-snake-game",
+  "version": "1.0.0",
+  "description": "",
+  "source": "src/index.html",
+  "type": "module",
+  "packageManager": "npm@10.2.3",
+  "scripts": {
+    "start": "npm run clean && parcel --no-cache",
+    "build": "npm run clean && parcel build --no-cache",
+    "serve": "python3 -m http.server -d dist",
+    "clean": "rm -rf dist .parcel-cache",
+    "test": "tsc",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "jsx-dom-runtime": "^0.70.0",
+    "storeon-velo": "^5.0.0-rc.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.10",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "parcel": "^2.12.0",
+    "postcss": "^8.4.38",
+    "postcss-modules": "^4.3.1",
+    "typescript": "^5.5.2"
+  },
+  "targets": {
+    "default": {
+      "sourceMap": false,
+      "publicUrl": " /yasno-snake-game/"
+    }
+  },
+  "author": {
+    "name": "Alexander Zaytsev",
+    "email": "zaytsev126@gmail.com",
+    "url": "https://x.com/_shoonia"
+  },
+  "license": "MIT"
+}
