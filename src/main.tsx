@@ -3,7 +3,8 @@ import { jsx, useText } from 'jsx-dom-runtime';
 import type { IState, IPoint } from './types';
 import { Dir, Mode } from './types';
 import { delay, randomInt } from './utils';
-import { Icon } from './components/Icon';
+import { Header } from './components/Header';
+import { _canvas, _main } from './style.css';
 
 const SIZE = 20;
 const H = SIZE * 7;
@@ -26,15 +27,11 @@ const [scope, setScope] = useText(state.scope);
 const [textMode, setMode] = useText<Mode>(state.mode);
 
 const canvas = jsx('canvas', {
-  class: 'canvas',
+  class: _canvas,
   height: H,
 });
 
-const ctx = canvas.getContext('2d', {
-  colorSpace: 'srgb',
-  desynchronized: true,
-  willReadFrequently: true,
-})!;
+const ctx = canvas.getContext('2d')!;
 
 const img = jsx('img', {
   src: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="%23192f3e" viewBox="0 0 18 18"%3E%3Cpath d="M16.875 16.082 1.918 1.125l-.793.793 3.6 3.606-.787 3.347a.562.562 0 0 0 .562.692h2.717l-1.03 6.665a.563.563 0 0 0 .563.647.563.563 0 0 0 .444-.22l3.758-4.91 5.13 5.13.793-.793ZM12.673 9.49l1.834-2.397a.563.563 0 0 0 .062-.562.561.561 0 0 0-.507-.343h-2.671l.984-4.377a.563.563 0 0 0-.563-.686H6.189a.563.563 0 0 0-.563.433l-.169.732 7.217 7.2Z"/%3E%3C/svg%3E',
@@ -60,10 +57,10 @@ const bomb: IPoint = {
 
 const ready = () => {
   const matches = window.matchMedia('(max-width: 650px)').matches;
+  const W = SIZE * (matches ? 18 : 24);
 
-  canvas.width = SIZE * (matches ? 18 : 24);
-  ctx.fillRect(0, 0, canvas.width, H);
-
+  canvas.width = W;
+  ctx.fillRect(0, 0, W, H);
   restart();
 };
 
@@ -79,7 +76,6 @@ const gameLoop = async () => {
   }
 
   state.step = 0;
-
   ctx.clearRect(0, 0, canvas.width, H);
   drawImage(img, food);
   drawSnake();
@@ -291,11 +287,9 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.body.append(
-  <div class="wrapper" ref={ready}>
-    <header>
-      <Icon />
-    </header>
-    <main>
+  <>
+    <Header />
+    <main class={_main} ref={ready}>
       <ul>
         <li>Score: {scope}</li>
         <li>
@@ -309,7 +303,7 @@ document.body.append(
     </main>
     <footer>
     </footer>
-  </div>,
+  </>,
 );
 
 window.addEventListener('resize', ready, { passive: true });
