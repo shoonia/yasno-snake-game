@@ -17,7 +17,6 @@ export interface IPoint {
 }
 
 export interface IState {
-  cellSize: 18 | 24;
   step: number;
   stepMax: number;
   scope: number;
