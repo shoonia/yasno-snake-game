@@ -1,15 +1,13 @@
+import { Header } from './Header';
+import { Main } from './Main';
 import { Game } from './Game';
-import { Icon } from './Icon';
+import { Footer } from './Footer';
 
 export const App: JSX.FC = () =>
   <>
-    <header>
-      <Icon />
-    </header>
-    <main>
+    <Header />
+    <Main>
       <Game />
-    </main>
-    <footer>
-
-    </footer>
+    </Main>
+    <Footer />
   </>;
