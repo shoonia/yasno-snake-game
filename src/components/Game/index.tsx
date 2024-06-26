@@ -1,5 +1,6 @@
-import { delay, randomInt } from '../../utils';
 import { _game, _row, _cell } from './style.css';
+import { delay, randomInt } from '../../utils';
+import { LightningIcon } from '../LightningIcon';
 
 interface IPoint {
   x: number;
@@ -86,11 +87,11 @@ const turnRight = () => {
   }
 };
 
-const addPoint = (point: IPoint, value: string) => {
+const addPoint = (point: IPoint) => {
   const div = grid[point.y]?.[point.x];
 
   if (div) {
-    div.textContent = value;
+    div.append(<LightningIcon />);
   }
 };
 
@@ -99,7 +100,7 @@ const removePoint = (point?: IPoint) => {
     const div = grid[point.y]?.[point.x];
 
     if (div) {
-      div.textContent = '';
+      div.innerHTML = '';
     }
   }
 };
@@ -110,7 +111,7 @@ const randomFood = (f: IPoint) => {
   f.x = randomInt(0, X);
   f.y = randomInt(0, Y);
 
-  addPoint(f, '0');
+  addPoint(f);
 };
 
 const drawSnake = () => {
@@ -127,32 +128,31 @@ const drawSnake = () => {
     state.y = 0;
   }
 
-  const len = state.points.unshift({
+  const head: IPoint = {
     x: state.x,
     y: state.y,
-  });
+  };
+
+  const len = state.points.unshift(head);
 
   if (len > state.size) {
     removePoint(state.points.pop());
   }
 
-  state.points.some((point, index) => {
-    addPoint(point, '1');
+  if (head.x === state.food.x && head.y === state.food.y) {
+    state.size++;
+    randomFood(state.food);
+  }
 
-    if (point.x === state.food.x && point.y === state.food.y) {
-      state.size++;
-      randomFood(state.food);
-    }
+  const isIntercepted = state.points.some((point) =>
+    head !== point && head.x === point.x && head.y === point.y,
+  );
 
-    for (let i = index + 1; i < state.points.length; i++) {
-      const e = state.points[i];
-
-      if (point.x === e.x && point.y === e.y) {
-        requestAnimationFrame(restart);
-        return true;
-      }
-    }
-  });
+  if (isIntercepted) {
+    requestAnimationFrame(restart);
+  } else {
+    addPoint(head);
+  }
 };
 
 const gameLoop = async () => {
