@@ -12,8 +12,9 @@ interface IState {
   dirX: number;
   dirY: number;
   size: number;
-  points: IPoint[];
   dir: Dir;
+  points: IPoint[];
+  food: IPoint;
 }
 
 const enum Dir {
@@ -35,28 +36,29 @@ const state: IState = {
   size: 1,
   points: [],
   dir: Dir.Empty,
+  food: {
+    x: randomInt(0, X),
+    y: randomInt(0, Y),
+  },
 };
 
 const grid: HTMLDivElement[][] = [];
 
-const food: IPoint = {
-  x: randomInt(0, X),
-  y: randomInt(0, Y),
-};
-
 const restart = () => {
+  state.points.forEach(removePoint);
   state.points = [];
   state.dir = Dir.Empty;
   state.x = state.y = 1;
   state.dirX = state.dirY = 0;
   state.size = 1;
+  randomFood(state.food);
 };
 
 const turnUp = () => {
   if (state.dir !== Dir.Down) {
     state.dir = Dir.Up;
-    state.dirY = -1;
     state.dirX = 0;
+    state.dirY = -1;
   }
 };
 
@@ -71,8 +73,8 @@ const turnLeft = () => {
 const turnDown = () => {
   if (state.dir !== Dir.Up) {
     state.dir = Dir.Down;
-    state.dirY = 1;
     state.dirX = 0;
+    state.dirY = 1;
   }
 };
 
@@ -102,10 +104,13 @@ const removePoint = (point?: IPoint) => {
   }
 };
 
-const setRandomFood = () => {
-  food.x = randomInt(0, X);
-  food.y = randomInt(0, Y);
-  addPoint(food, '0');
+const randomFood = (f: IPoint) => {
+  removePoint(f);
+
+  f.x = randomInt(0, X);
+  f.y = randomInt(0, Y);
+
+  addPoint(f, '0');
 };
 
 const drawSnake = () => {
@@ -131,13 +136,21 @@ const drawSnake = () => {
     removePoint(state.points.pop());
   }
 
-  state.points.forEach((point) => {
+  state.points.some((point, index) => {
     addPoint(point, '1');
 
-    if (point.x === food.x && point.y === food.y) {
+    if (point.x === state.food.x && point.y === state.food.y) {
       state.size++;
-      removePoint(food);
-      setRandomFood();
+      randomFood(state.food);
+    }
+
+    for (let i = index + 1; i < state.points.length; i++) {
+      const e = state.points[i];
+
+      if (point.x === e.x && point.y === e.y) {
+        requestAnimationFrame(restart);
+        return true;
+      }
     }
   });
 };
@@ -145,7 +158,6 @@ const drawSnake = () => {
 const gameLoop = async () => {
   await delay(250);
   requestAnimationFrame(gameLoop);
-  addPoint(food, '0');
   drawSnake();
 };
 
