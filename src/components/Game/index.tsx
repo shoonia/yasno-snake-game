@@ -38,8 +38,8 @@ const state: IState = {
   points: [],
   dir: Dir.Empty,
   food: {
-    x: randomInt(0, X),
-    y: randomInt(0, Y),
+    x: randomInt(X, [1]),
+    y: randomInt(Y, [1]),
   },
 };
 
@@ -52,7 +52,7 @@ const restart = () => {
   state.x = state.y = 1;
   state.dirX = state.dirY = 0;
   state.size = 1;
-  randomFood(state.food);
+  randomFood(state);
 };
 
 const turnUp = () => {
@@ -105,13 +105,15 @@ const removePoint = (point?: IPoint) => {
   }
 };
 
-const randomFood = (f: IPoint) => {
-  removePoint(f);
+const randomFood = (state: IState) => {
+  removePoint(state.food);
 
-  f.x = randomInt(0, X);
-  f.y = randomInt(0, Y);
+  state.food = {
+    x: randomInt(X, state.points.map((i) => i.x)),
+    y: randomInt(Y, state.points.map((i) => i.y)),
+  };
 
-  addPoint(f);
+  addPoint(state.food);
 };
 
 const drawSnake = () => {
@@ -137,7 +139,7 @@ const drawSnake = () => {
 
   if (head.x === state.food.x && head.y === state.food.y) {
     state.size++;
-    randomFood(state.food);
+    randomFood(state);
   } if (len > state.size) {
     removePoint(state.points.pop());
   }
