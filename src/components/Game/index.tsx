@@ -135,13 +135,11 @@ const drawSnake = () => {
 
   const len = state.points.unshift(head);
 
-  if (len > state.size) {
-    removePoint(state.points.pop());
-  }
-
   if (head.x === state.food.x && head.y === state.food.y) {
     state.size++;
     randomFood(state.food);
+  } if (len > state.size) {
+    removePoint(state.points.pop());
   }
 
   const isIntercepted = state.points.some((point) =>
