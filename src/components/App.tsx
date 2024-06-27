@@ -1,13 +1,12 @@
 import { Header } from './Header';
 import { Main } from './Main';
-import { Game } from './Game';
+import { Section } from './Section';
 import { Footer } from './Footer';
 
 export const App: JSX.FC = () =>
   <>
     <Header />
-    <Main>
-      <Game />
-    </Main>
+    <Main />
+    <Section />
     <Footer />
   </>;

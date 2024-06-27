@@ -1,4 +1,4 @@
-:global(body) {
+body {
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -6,4 +6,6 @@
   font-size: 16px;
   color: #495a7a;
   background-color: #eff2f6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
