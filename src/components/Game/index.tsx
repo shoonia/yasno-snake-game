@@ -1,5 +1,5 @@
 import { _game, _row, _cell } from './style.css';
-import { delay, randomInt } from '../../utils';
+import { delay, from, randomInt } from '../../utils';
 import { LightningIcon } from '../LightningIcon';
 
 interface IPoint {
@@ -87,17 +87,17 @@ const turnRight = () => {
   }
 };
 
-const addPoint = (point: IPoint) => {
-  const div = grid[point.y]?.[point.x];
+const addPoint = (p: IPoint) => {
+  const div = grid[p.y]?.[p.x];
 
   if (div) {
     div.append(<LightningIcon />);
   }
 };
 
-const removePoint = (point?: IPoint) => {
-  if (point) {
-    const div = grid[point.y]?.[point.x];
+const removePoint = (p?: IPoint) => {
+  if (p) {
+    const div = grid[p.y]?.[p.x];
 
     if (div) {
       div.innerHTML = '';
@@ -161,9 +161,6 @@ const gameLoop = async () => {
   drawSnake();
 };
 
-const from = (length: number, cb: (_: unknown, i: number) => JSX.Element) =>
-  Array.from<unknown, JSX.Element>({ length }, cb);
-
 let x: number | null, y: number | null;
 
 document.addEventListener('touchstart', (event) => {
@@ -208,14 +205,14 @@ requestAnimationFrame(gameLoop);
 
 export const Game: JSX.FC = () =>
   <article ref={restart} class={_game}>
-    {from(Y, (_, y) => {
+    {from(Y, (y) => {
       const row: HTMLDivElement[] = [];
 
       grid.push(row);
 
       return (
         <div class={_row} data-y={y}>
-          {from(X, (_, x) =>
+          {from(X, (x) =>
             <div
               class={_cell}
               data-x={x}
