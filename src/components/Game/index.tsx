@@ -1,6 +1,5 @@
-import { _game, _row, _cell } from './style.css';
+import { _game, _row, _cell, _icon } from './style.css';
 import { delay, from, randomInt } from '../../utils';
-import { LightningIcon } from '../LightningIcon';
 
 interface IPoint {
   x: number;
@@ -88,20 +87,12 @@ const turnRight = () => {
 };
 
 const addPoint = (p: IPoint) => {
-  const div = grid[p.y]?.[p.x];
-
-  if (div) {
-    div.append(<LightningIcon />);
-  }
+  grid[p.y]?.[p.x]?.classList.add(_icon);
 };
 
 const removePoint = (p?: IPoint) => {
   if (p) {
-    const div = grid[p.y]?.[p.x];
-
-    if (div) {
-      div.innerHTML = '';
-    }
+    grid[p.y]?.[p.x]?.classList.remove(_icon);
   }
 };
 
@@ -205,18 +196,17 @@ requestAnimationFrame(gameLoop);
 
 export const Game: JSX.FC = () =>
   <article ref={restart} class={_game}>
-    {from(Y, (y) => {
+    {from(Y, () => {
       const row: HTMLDivElement[] = [];
 
       grid.push(row);
 
       return (
-        <div class={_row} data-y={y}>
-          {from(X, (x) =>
+        <div class={_row}>
+          {from(X, () =>
             <div
-              class={_cell}
-              data-x={x}
               ref={(div) => row.push(div)}
+              class={_cell}
             />,
           )}
         </div>

@@ -12,5 +12,5 @@ export const randomInt = (max: number, list: number[]): number => {
 export const delay = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-export const from = (length: number, cb: (i: number) => JSX.Element) =>
-  Array.from<unknown, JSX.Element>({ length }, (_, i) => cb(i));
+export const from = (length: number, cb: (v: unknown, i: number) => JSX.Element) =>
+  Array.from<unknown, JSX.Element>({ length }, cb);
