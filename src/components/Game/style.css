@@ -1,19 +1,19 @@
 ._game {
   display: inline-block;
   background-color: #fff;
-  border-top: 0.5px solid #d0e0ea;
-  border-left: 0.5px solid #d0e0ea;
+  border-top: var(--border);
+  border-left: var(--border);
 }
 
 ._row {
   display: flex;
-  border-bottom: 0.5px solid #d0e0ea;
+  border-bottom: var(--border);
 }
 
 ._cell {
   width: 30px;
   height: 40px;
-  border-right: 0.5px solid #d0e0ea;
+  border-right: var(--border);
 }
 
 ._cell_g {
@@ -31,7 +31,7 @@
   font-weight: bold;
   width: 30px;
   height: 60px;
-  border-right: 0.5px solid #d0e0ea;
+  border-right: var(--border);
   color: var(--cl-text);
   display: inline-flex;
   align-items: center;
