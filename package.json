@@ -29,7 +29,7 @@
   "targets": {
     "default": {
       "sourceMap": false,
-      "publicUrl": " /yasno-snake-game/"
+      "publicUrl": "/yasno-snake-game/"
     }
   },
   "author": {
