@@ -1,8 +1,9 @@
-import { _game, _row, _cell, _cell_g, _icon } from './style.css';
+import { _game, _row, _cell, _cell_g } from './style.css';
 import { delay, from } from '../../utils';
 import { X, Y } from './consts';
 import { Time } from './Time';
 import { snake, type IPoint } from './snake';
+import { view } from './view';
 
 interface IState {
   food: IPoint;
@@ -12,26 +13,16 @@ const state: IState = {
   food: { x: 0, y: 0 },
 };
 
-const grid: HTMLDivElement[][] = [];
-
 const start = () => {
-  snake.points.forEach(removePoint);
+  view.bulkRemove(snake.points);
   snake.reset();
   randomFood(state);
 };
 
-const addPoint = (p: IPoint) => {
-  grid[p.y]?.[p.x]?.classList.add(_icon);
-};
-
-const removePoint = (p: IPoint) => {
-  grid[p.y]?.[p.x]?.classList.remove(_icon);
-};
-
 const randomFood = (state: IState) => {
-  removePoint(state.food);
+  view.remove(state.food);
   state.food = snake.randomPoin();
-  addPoint(state.food);
+  view.add(state.food);
 };
 
 const drawSnake = () => {
@@ -42,7 +33,7 @@ const drawSnake = () => {
     snake.size++;
     randomFood(state);
   } if (len > snake.size) {
-    removePoint(snake.points.pop()!);
+    view.remove(snake.points.pop()!);
   }
 
   const intercepted = snake.points.some((p) =>
@@ -52,7 +43,7 @@ const drawSnake = () => {
   if (intercepted) {
     requestAnimationFrame(start);
   } else {
-    addPoint(head);
+    view.add(head);
   }
 };
 
@@ -123,7 +114,7 @@ export const Game: JSX.FC = () =>
     {from(Y, () => {
       const row: HTMLDivElement[] = [];
 
-      grid.push(row);
+      view.grid.push(row);
 
       return (
         <div class={_row}>
