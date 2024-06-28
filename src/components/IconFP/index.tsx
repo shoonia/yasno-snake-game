@@ -1,0 +1,7 @@
+export const IconFP: JSX.FC = () =>
+  <svg width="100" viewBox="0 0 400 400">
+    <path fill="#ffa400" d="M400 166.67H0v66.67h400v-66.67Z"/>
+    <path fill="#ffa400" d="M66.67 333.33V166.67H0V400h333.33v-66.67H66.67Z"/>
+    <path fill="#001e61" d="M400 0h-66.67v166.67H400V0Zm0 233.33h-66.67V400H400V233.33Z"/>
+    <path fill="#001e61" d="M400 0H166.67v333.33h66.66V66.67H400V0Z"/>
+  </svg>;
