@@ -19,6 +19,23 @@ interface IState {
   food: IPoint;
 }
 
+const randomPoin = (s: IState): IPoint => {
+  const positions = s.points.reduce<Set<number>>(
+    (acc, i) => acc.add(i.x + i.y),
+    new Set(),
+  );
+
+  let x: number;
+  let y: number;
+
+  do {
+    x = randomInt(X);
+    y = randomInt(Y);
+  } while (positions.has(x + y));
+
+  return { x, y };
+};
+
 const state: IState = {
   x: 1,
   y: 1,
@@ -27,10 +44,7 @@ const state: IState = {
   size: 1,
   points: [],
   dir: Dir.Empty,
-  food: {
-    x: randomInt(X, [1]),
-    y: randomInt(Y, [1]),
-  },
+  food: { x: 0, y: 0 },
 };
 
 const grid: HTMLDivElement[][] = [];
@@ -81,20 +95,13 @@ const addPoint = (p: IPoint) => {
   grid[p.y]?.[p.x]?.classList.add(_icon);
 };
 
-const removePoint = (p?: IPoint) => {
-  if (p) {
-    grid[p.y]?.[p.x]?.classList.remove(_icon);
-  }
+const removePoint = (p: IPoint) => {
+  grid[p.y]?.[p.x]?.classList.remove(_icon);
 };
 
 const randomFood = (state: IState) => {
   removePoint(state.food);
-
-  state.food = {
-    x: randomInt(X, state.points.map((i) => i.x)),
-    y: randomInt(Y, state.points.map((i) => i.y)),
-  };
-
+  state.food = randomPoin(state);
   addPoint(state.food);
 };
 
@@ -123,14 +130,14 @@ const drawSnake = () => {
     state.size++;
     randomFood(state);
   } if (len > state.size) {
-    removePoint(state.points.pop());
+    removePoint(state.points.pop()!);
   }
 
-  const isIntercepted = state.points.some((point) =>
-    head !== point && head.x === point.x && head.y === point.y,
+  const intercepted = state.points.some((p) =>
+    head !== p && head.x === p.x && head.y === p.y,
   );
 
-  if (isIntercepted) {
+  if (intercepted) {
     requestAnimationFrame(start);
   } else {
     addPoint(head);

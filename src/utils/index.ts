@@ -1,15 +1,4 @@
-export const randomInt = (max: number, list: number[]): number => {
-  let i;
-
-  console.log(list);
-
-  do {
-    i = Math.floor(Math.random() * max);
-  } while (list.includes(i));
-
-  return i;
-};
-
+export const randomInt = (max: number) => Math.floor(Math.random() * max);
 
 export const delay = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
