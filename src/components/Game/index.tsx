@@ -5,33 +5,30 @@ import { Time } from './Time';
 import { snake, type IPoint } from './snake';
 import { view } from './view';
 
-interface IState {
-  food: IPoint;
-}
-
-const state: IState = {
-  food: { x: 0, y: 0 },
+let food: IPoint = {
+  x: 0,
+  y: 0,
 };
 
 const start = () => {
   view.bulkRemove(snake.points);
   snake.reset();
-  randomFood(state);
+  randomFood();
 };
 
-const randomFood = (state: IState) => {
-  view.remove(state.food);
-  state.food = snake.randomPoin();
-  view.add(state.food);
+const randomFood = () => {
+  view.remove(food);
+  food = snake.randomPoin();
+  view.add(food);
 };
 
 const drawSnake = () => {
   const head = snake.nextPoin();
   const len = snake.points.unshift(head);
 
-  if (head.x === state.food.x && head.y === state.food.y) {
+  if (head.x === food.x && head.y === food.y) {
     snake.size++;
-    randomFood(state);
+    randomFood();
   } if (len > snake.size) {
     view.remove(snake.points.pop()!);
   }
