@@ -1,3 +1,7 @@
+._wrapper {
+  padding: 0 1em;
+}
+
 ._box {
   padding: 2em;
   margin: 3em auto;

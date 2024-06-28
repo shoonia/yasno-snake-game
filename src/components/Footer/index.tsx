@@ -17,6 +17,9 @@ export const Footer: JSX.FC = () =>
       </a>
     </div>
     <div class={_auth}>
-      <time dateTime="2024">2024</time>
+      <time dateTime="2024">2024 </time>
+      <a href="https://x.com/_shoonia" target="_blank" rel="me">
+        @_shoonia
+      </a>
     </div>
   </footer>;

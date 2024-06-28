@@ -4,10 +4,10 @@
   justify-content: center;
   gap: 3em;
   padding: 3em 1em;
+  border: var(--border);
 }
 
 ._auth {
-  border-top: var(--border);
-  padding: 1em 3em;
+  padding: 3em;
   font-size: 80%;
 }
