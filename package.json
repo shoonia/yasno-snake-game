@@ -28,8 +28,7 @@
   },
   "targets": {
     "default": {
-      "sourceMap": false,
-      "publicUrl": "/yasno-snake-game/"
+      "sourceMap": false
     }
   },
   "author": {
