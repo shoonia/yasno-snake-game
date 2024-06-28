@@ -3,7 +3,7 @@
   margin: 3em auto;
   max-width: 850px;
   background-color: #fff;
-  border-bottom: 6px solid #ffd100;
+  border-bottom: 6px solid var(--cl-sunglow);
 }
 
 ._title {

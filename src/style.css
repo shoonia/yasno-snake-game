@@ -1,3 +1,8 @@
+:root {
+  --cl-text: #495a7a;
+  --cl-sunglow: #ffd100;
+}
+
 body {
   overflow: hidden;
   margin: 0;

@@ -1,5 +1,7 @@
-import { _game, _row, _cell, _icon } from './style.css';
+import { _game, _row, _cell, _cell_g, _icon } from './style.css';
 import { delay, from, randomInt } from '../../utils';
+import { Dir, X, Y } from './consts';
+import { Time } from './Time';
 
 interface IPoint {
   x: number;
@@ -17,17 +19,6 @@ interface IState {
   food: IPoint;
 }
 
-const enum Dir {
-  Empty = 0,
-  Up = 1,
-  Down = 2,
-  Left = 3,
-  Right = 4,
-}
-
-const Y = 7;
-const X = 24;
-
 const state: IState = {
   x: 1,
   y: 1,
@@ -44,7 +35,7 @@ const state: IState = {
 
 const grid: HTMLDivElement[][] = [];
 
-const restart = () => {
+const start = () => {
   state.points.forEach(removePoint);
   state.points = [];
   state.dir = Dir.Empty;
@@ -140,7 +131,7 @@ const drawSnake = () => {
   );
 
   if (isIntercepted) {
-    requestAnimationFrame(restart);
+    requestAnimationFrame(start);
   } else {
     addPoint(head);
   }
@@ -192,10 +183,25 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+const cellClass: Generator<string, string> = (function* () {
+  let i = 0;
+  const matrix = [1, 1, 1, 1, 0, 0, 0, 0, 0];
+
+  while (true) {
+    yield matrix[i++ % matrix.length] ? _cell_g : _cell;
+  }
+})();
+
+const ready = () => {
+  start();
+  turnRight();
+};
+
 requestAnimationFrame(gameLoop);
 
 export const Game: JSX.FC = () =>
-  <article ref={restart} class={_game}>
+  <article ref={ready} class={_game}>
+    <Time />
     {from(Y, () => {
       const row: HTMLDivElement[] = [];
 
@@ -206,7 +212,7 @@ export const Game: JSX.FC = () =>
           {from(X, () =>
             <div
               ref={(div) => row.push(div)}
-              class={_cell}
+              class={cellClass.next().value}
             />,
           )}
         </div>
