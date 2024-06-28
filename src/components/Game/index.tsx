@@ -1,9 +1,14 @@
-import { _game, _row, _cell, _cell_g } from './style.css';
+import { _game, _row } from './style.css';
 import { delay, from } from '../../utils';
 import { X, Y } from './consts';
 import { Time } from './Time';
 import { snake, type IPoint } from './snake';
 import { view } from './view';
+
+interface TouchEventListenerObject extends EventListenerObject {
+  x: number;
+  y: number
+}
 
 let food: IPoint = {
   x: 0,
@@ -50,60 +55,62 @@ const gameLoop = async () => {
   drawSnake();
 };
 
-let x: number | null, y: number | null;
-
-document.addEventListener('touchstart', (event) => {
-  const touch = event.touches[0];
-  x = touch.clientX;
-  y = touch.clientY;
-});
-
-document.addEventListener('touchmove', (event) => {
-  if (!x || !y) {
-    return false;
-  }
-
-  const xDiff = event.touches[0].clientX - x;
-  const yDiff = event.touches[0].clientY - y;
-
-  x = y = null;
-
-  if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    if (xDiff > 0) snake.turnRight();
-    else snake.turnLeft();
-  } else {
-    if (yDiff > 0) snake.turnDown();
-    else snake.turnUp();
-  }
-});
-
-document.addEventListener('keydown', (event) => {
-  switch (event.keyCode) {
-    case 87:
-    case 38: return snake.turnUp();
-    case 65:
-    case 37: return snake.turnLeft();
-    case 83:
-    case 40: return snake.turnDown();
-    case 68:
-    case 39: return snake.turnRight();
-  }
-});
-
-const cellClass: Generator<string, string> = (function* () {
-  let i = 0;
-  const matrix = [1, 1, 1, 1, 0, 0, 0, 0, 0];
-
-  while (true) {
-    yield matrix[i++ % matrix.length] ? _cell_g : _cell;
-  }
-})();
-
 const ready = () => {
   start();
   snake.turnRight();
   requestAnimationFrame(gameLoop);
 };
+
+const touchEventListener: TouchEventListenerObject = {
+  x: -1,
+  y: -1,
+
+  handleEvent(event: TouchEvent) {
+    const touch = event.touches[0];
+
+    switch (event.type) {
+      case 'touchstart': {
+        this.x = touch.clientX;
+        this.y = touch.clientY;
+        return;
+      }
+
+      case 'touchmove': {
+        if (this.x < 0 || this.y < 0) {
+          return;
+        }
+
+        const diffX = touch.clientX - this.x;
+        const diffY = touch.clientY - this.y;
+
+        this.x = this.y = -1;
+
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX > 0) snake.turnRight();
+          else snake.turnLeft();
+        } else {
+          if (diffY > 0) snake.turnDown();
+          else snake.turnUp();
+        }
+      }
+    }
+  },
+};
+
+document.addEventListener('touchstart', touchEventListener);
+document.addEventListener('touchmove', touchEventListener);
+document.addEventListener('keydown', (event) => {
+  switch (event.code) {
+    case 'KeyW':
+    case 'ArrowUp': return snake.turnUp();
+    case 'KeyS':
+    case 'ArrowDown': return snake.turnDown();
+    case 'KeyA':
+    case 'ArrowLeft': return snake.turnLeft();
+    case 'KeyD':
+    case 'ArrowRight': return snake.turnRight();
+  }
+});
 
 export const Game: JSX.FC = () =>
   <article ref={ready} class={_game}>
@@ -118,7 +125,7 @@ export const Game: JSX.FC = () =>
           {from(X, () =>
             <div
               ref={(div) => row.push(div)}
-              class={cellClass.next().value}
+              class={view.cellClass()}
             />,
           )}
         </div>
