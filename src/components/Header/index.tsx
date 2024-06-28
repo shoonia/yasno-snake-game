@@ -1,7 +1,8 @@
 import { _header } from './styles.css';
-import { Icon } from '../Icon';
+
+import logo from './logo.svg';
 
 export const Header: JSX.FC = () =>
   <header class={_header}>
-    <Icon />
+    <img src={logo} width="100" alt="Шо не Yasno?" />
   </header>;

@@ -195,9 +195,8 @@ const cellClass: Generator<string, string> = (function* () {
 const ready = () => {
   start();
   turnRight();
+  requestAnimationFrame(gameLoop);
 };
-
-requestAnimationFrame(gameLoop);
 
 export const Game: JSX.FC = () =>
   <article ref={ready} class={_game}>
