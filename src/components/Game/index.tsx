@@ -1,94 +1,23 @@
 import { _game, _row, _cell, _cell_g, _icon } from './style.css';
-import { delay, from, randomInt } from '../../utils';
-import { Dir, X, Y } from './consts';
+import { delay, from } from '../../utils';
+import { X, Y } from './consts';
 import { Time } from './Time';
-
-interface IPoint {
-  x: number;
-  y: number;
-}
+import { snake, type IPoint } from './snake';
 
 interface IState {
-  x: number;
-  y: number;
-  dirX: number;
-  dirY: number;
-  size: number;
-  dir: Dir;
-  points: IPoint[];
   food: IPoint;
 }
 
-const randomPoin = (s: IState): IPoint => {
-  const positions = s.points.reduce<Set<number>>(
-    (acc, i) => acc.add(i.x + i.y),
-    new Set(),
-  );
-
-  let x: number;
-  let y: number;
-
-  do {
-    x = randomInt(X);
-    y = randomInt(Y);
-  } while (positions.has(x + y));
-
-  return { x, y };
-};
-
 const state: IState = {
-  x: 1,
-  y: 1,
-  dirX: 0,
-  dirY: 0,
-  size: 1,
-  points: [],
-  dir: Dir.Empty,
   food: { x: 0, y: 0 },
 };
 
 const grid: HTMLDivElement[][] = [];
 
 const start = () => {
-  state.points.forEach(removePoint);
-  state.points = [];
-  state.dir = Dir.Empty;
-  state.x = state.y = 1;
-  state.dirX = state.dirY = 0;
-  state.size = 1;
+  snake.points.forEach(removePoint);
+  snake.reset();
   randomFood(state);
-};
-
-const turnUp = () => {
-  if (state.dir !== Dir.Down) {
-    state.dir = Dir.Up;
-    state.dirX = 0;
-    state.dirY = -1;
-  }
-};
-
-const turnLeft = () => {
-  if (state.dir !== Dir.Right) {
-    state.dir = Dir.Left;
-    state.dirX = -1;
-    state.dirY = 0;
-  }
-};
-
-const turnDown = () => {
-  if (state.dir !== Dir.Up) {
-    state.dir = Dir.Down;
-    state.dirX = 0;
-    state.dirY = 1;
-  }
-};
-
-const turnRight = () => {
-  if (state.dir !== Dir.Left) {
-    state.dir = Dir.Right;
-    state.dirX = 1;
-    state.dirY = 0;
-  }
 };
 
 const addPoint = (p: IPoint) => {
@@ -101,39 +30,22 @@ const removePoint = (p: IPoint) => {
 
 const randomFood = (state: IState) => {
   removePoint(state.food);
-  state.food = randomPoin(state);
+  state.food = snake.randomPoin();
   addPoint(state.food);
 };
 
 const drawSnake = () => {
-  state.x += state.dirX;
-  state.y += state.dirY;
-
-  if (state.x < 0) {
-    state.x = X - 1;
-  } else if (state.x >= X) {
-    state.x = 0;
-  } else if (state.y < 0) {
-    state.y = Y - 1;
-  } else if (state.y >= Y) {
-    state.y = 0;
-  }
-
-  const head: IPoint = {
-    x: state.x,
-    y: state.y,
-  };
-
-  const len = state.points.unshift(head);
+  const head = snake.nextPoin();
+  const len = snake.points.unshift(head);
 
   if (head.x === state.food.x && head.y === state.food.y) {
-    state.size++;
+    snake.size++;
     randomFood(state);
-  } if (len > state.size) {
-    removePoint(state.points.pop()!);
+  } if (len > snake.size) {
+    removePoint(snake.points.pop()!);
   }
 
-  const intercepted = state.points.some((p) =>
+  const intercepted = snake.points.some((p) =>
     head !== p && head.x === p.x && head.y === p.y,
   );
 
@@ -169,24 +81,24 @@ document.addEventListener('touchmove', (event) => {
   x = y = null;
 
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    if (xDiff > 0) turnRight();
-    else turnLeft();
+    if (xDiff > 0) snake.turnRight();
+    else snake.turnLeft();
   } else {
-    if (yDiff > 0) turnDown();
-    else turnUp();
+    if (yDiff > 0) snake.turnDown();
+    else snake.turnUp();
   }
 });
 
 document.addEventListener('keydown', (event) => {
   switch (event.keyCode) {
     case 87:
-    case 38: return turnUp();
+    case 38: return snake.turnUp();
     case 65:
-    case 37: return turnLeft();
+    case 37: return snake.turnLeft();
     case 83:
-    case 40: return turnDown();
+    case 40: return snake.turnDown();
     case 68:
-    case 39: return turnRight();
+    case 39: return snake.turnRight();
   }
 });
 
@@ -201,7 +113,7 @@ const cellClass: Generator<string, string> = (function* () {
 
 const ready = () => {
   start();
-  turnRight();
+  snake.turnRight();
   requestAnimationFrame(gameLoop);
 };
 
