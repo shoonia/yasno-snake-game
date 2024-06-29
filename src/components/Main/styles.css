@@ -9,6 +9,7 @@
   background-color: #fff;
   border-bottom: 6px solid var(--cl-sunglow);
   height: fit-content;
+  touch-action: none;
 }
 
 .title {

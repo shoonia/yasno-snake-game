@@ -3,6 +3,7 @@
   background-color: #fff;
   border-top: var(--border);
   border-left: var(--border);
+  touch-action: none;
 }
 
 .row {
