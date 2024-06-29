@@ -1,4 +1,4 @@
-._box {
+.box {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,7 +7,7 @@
   border: var(--border);
 }
 
-._auth {
+.auth {
   padding: 3em;
   font-size: 80%;
 }

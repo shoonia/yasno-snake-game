@@ -1,8 +1,8 @@
-._wrapper {
+.wrapper {
   padding: 0 1em;
 }
 
-._box {
+.box {
   padding: 2em;
   margin: 3em auto;
   max-width: 850px;
@@ -10,10 +10,10 @@
   border-bottom: 6px solid var(--cl-sunglow);
 }
 
-._title {
+.title {
   font-weight: normal;
   font-size: 2.5em;
   color: #11203e;
   line-height: 1.1;
-  margin: 0 0 1em 0;
+  margin: 0 0 1em;
 }

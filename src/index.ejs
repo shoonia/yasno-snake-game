@@ -1,0 +1,33 @@
+
+<%
+  var title = manifest.name;
+  var homepage = manifest.scope;
+%>
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <% if (isProd) { %>
+    <base href="<%= homepage %>">
+    <link rel="manifest" href="manifest.json">
+  <% } %>
+  <title><%= title %></title>
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@_shoonia">
+  <meta name="twitter:site" content="@_shoonia">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= homepage %>">
+  <link rel="canonical" href="<%= homepage %>">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+  <noscript>
+    Вам потрібно ввімкнути JavaScript, щоб запустити цю гру
+  </noscript>
+</body>
+</html>

@@ -1,4 +1,4 @@
-import { _game, _row } from './style.css';
+import s from './style.css';
 import { delay, from } from '../../utils';
 import { X, Y } from './consts';
 import { Time } from './Time';
@@ -109,7 +109,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 export const Game: JSX.FC = () =>
-  <article ref={ready} class={_game}>
+  <article ref={ready} class={s.game}>
     <Time />
     {from(Y, () => {
       const row: HTMLDivElement[] = [];
@@ -117,7 +117,7 @@ export const Game: JSX.FC = () =>
       view.grid.push(row);
 
       return (
-        <div class={_row}>
+        <div class={s.row}>
           {from(X, () =>
             <div
               ref={(div) => row.push(div)}

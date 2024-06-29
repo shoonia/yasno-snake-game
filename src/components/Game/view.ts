@@ -1,4 +1,4 @@
-import { _icon, _cell_g, _cell } from './style.css';
+import s from './style.css';
 import type { IPoint } from './snake';
 
 interface IView {
@@ -13,7 +13,7 @@ const generator = () => {
   let i = 0;
   const matrix = [1, 1, 1, 1, 0, 0, 0, 0, 0];
 
-  return (): string => matrix[i++ % matrix.length] ? _cell_g : _cell;
+  return (): string => matrix[i++ % matrix.length] ? s.cellg : s.cell;
 };
 
 export const view: IView = {
@@ -21,11 +21,11 @@ export const view: IView = {
   cellClass: generator(),
 
   add(p) {
-    this.grid[p.y][p.x].classList.add(_icon);
+    this.grid[p.y][p.x].classList.add(s.icon);
   },
 
   remove(p) {
-    this.grid[p.y][p.x].classList.remove(_icon);
+    this.grid[p.y][p.x].classList.remove(s.icon);
   },
 
   bulkRemove(ps) {

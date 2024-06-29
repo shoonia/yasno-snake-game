@@ -1,31 +1,31 @@
-._game {
+.game {
   display: inline-block;
   background-color: #fff;
   border-top: var(--border);
   border-left: var(--border);
 }
 
-._row {
+.row {
   display: flex;
   border-bottom: var(--border);
 }
 
-._cell {
+.cell {
   width: 30px;
   height: 40px;
   border-right: var(--border);
 }
 
-._cell_g {
-  composes: _cell;
+.cellg {
+  composes: cell;
   background-color: #f2f5f7;
 }
 
-._icon {
+.icon {
   background: var(--cl-sunglow) url('./lightning.svg') no-repeat center;
 }
 
-._time {
+.time {
   writing-mode: vertical-rl;
   font-size: 80%;
   font-weight: bold;

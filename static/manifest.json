@@ -1,0 +1,13 @@
+{
+  "name": "Yasno Snake Game",
+  "short_name": "Yasno Snake Game",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "https://yasno-snake-game.netlify.app/",
+  "start_url": ".",
+  "lang": "uk",
+  "orientation": "portrait",
+  "description": "",
+  "icons": []
+}
