@@ -1,6 +1,8 @@
 .header {
   padding: 1em 3em;
   background-color: #fff;
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (max-width: 60em) {

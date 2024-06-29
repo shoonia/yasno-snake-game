@@ -2,6 +2,7 @@
 <%
   var title = manifest.name;
   var homepage = manifest.scope;
+  var description = manifest.description;
 %>
 
 <!DOCTYPE html>
@@ -15,10 +16,12 @@
     <link rel="manifest" href="manifest.json">
   <% } %>
   <title><%= title %></title>
+  <meta name="description" content="<%= description %>">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:creator" content="@_shoonia">
   <meta name="twitter:site" content="@_shoonia">
   <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="<%= description %>">
   <meta property="og:type" content="website">
   <meta property="og:url" content="<%= homepage %>">
   <link rel="canonical" href="<%= homepage %>">

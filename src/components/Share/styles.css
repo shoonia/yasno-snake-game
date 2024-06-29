@@ -1,0 +1,21 @@
+.btn {
+  appearance: none;
+  background-color: #fff;
+  color: var(--cl-accent);
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--cl-accent);
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:focus {
+  color: #fff;
+  background-color: var(--cl-accent);
+}

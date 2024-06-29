@@ -7,13 +7,13 @@ export const Footer: JSX.FC = () =>
   <footer>
     <div class={s.box}>
       <a href="https://savelife.in.ua/donate/">
-        <img src={cba} width="100" alt="Повернись Живим — фонд компетентної допомоги армії" />
+        <img src={cba} width="90" alt="Повернись Живим — фонд компетентної допомоги армії" />
       </a>
       <a href="https://prytulafoundation.org/donation">
-        <img src={fp} height="50" alt="благодійний фонд Сергія Притули" />
+        <img src={fp} width="45" alt="благодійний фонд Сергія Притули" />
       </a>
       <a href="https://u24.gov.ua/uk/donate">
-        <img src={u24} width="100" alt="United24 - офіційна фандрейзингова платформа України" />
+        <img src={u24} width="90" alt="United24 - офіційна фандрейзингова платформа України" />
       </a>
     </div>
     <div class={s.auth}>
