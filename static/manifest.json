@@ -4,7 +4,7 @@
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "https://yasno-snake-game.netlify.app/",
+  "scope": "https://yasno-snake-game.netlify.app",
   "start_url": ".",
   "lang": "uk",
   "orientation": "portrait",
