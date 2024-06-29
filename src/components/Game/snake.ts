@@ -8,20 +8,22 @@ export interface IPoint {
 
 interface ISnake {
   readonly points: IPoint[];
+  float: IPoint;
   x: number;
   y: number;
   size: number;
   dir: Dir;
   dirX: number;
   dirY: number;
-  turnUp(): void;
-  turnDown(): void;
-  turnLeft(): void;
-  turnRight(): void;
+  up(): void;
+  down(): void;
+  left(): void;
+  right(): void;
   reset(): void;
-  nextPoin(): IPoint;
-  randomPoin(): IPoint;
-  isIntercept(p: IPoint): boolean;
+  next(): IPoint;
+  setFloat(): void;
+  intercept(p: IPoint): boolean;
+  catched(p: IPoint): boolean;
 }
 
 const enum Dir {
@@ -33,15 +35,16 @@ const enum Dir {
 }
 
 export const snake: ISnake = {
-  x: 0,
-  y: 0,
+  x: 1,
+  y: 1,
   size: 1,
   dir: Dir.Empty,
   dirX: 0,
   dirY: 0,
   points: [],
+  float: { x: 0, y: 0 },
 
-  turnUp() {
+  up() {
     if (this.dir !== Dir.Down) {
       this.dir = Dir.Up;
       this.dirX = 0;
@@ -49,7 +52,7 @@ export const snake: ISnake = {
     }
   },
 
-  turnDown() {
+  down() {
     if (this.dir !== Dir.Up) {
       this.dir = Dir.Down;
       this.dirX = 0;
@@ -57,7 +60,7 @@ export const snake: ISnake = {
     }
   },
 
-  turnLeft() {
+  left() {
     if (this.dir !== Dir.Right) {
       this.dir = Dir.Left;
       this.dirX = -1;
@@ -65,7 +68,7 @@ export const snake: ISnake = {
     }
   },
 
-  turnRight() {
+  right() {
     if (this.dir !== Dir.Left) {
       this.dir = Dir.Right;
       this.dirX = 1;
@@ -75,10 +78,11 @@ export const snake: ISnake = {
 
   reset() {
     this.points.length = this.dirX = this.dirY = 0;
-    this.x = this.y = this.size = 1;
+    this.size = this.x = this.y = 1;
+    this.dir = Dir.Empty;
   },
 
-  nextPoin() {
+  next() {
     this.x += this.dirX;
     this.y += this.dirY;
 
@@ -98,7 +102,7 @@ export const snake: ISnake = {
     };
   },
 
-  randomPoin() {
+  setFloat() {
     const positions = this.points.reduce<Set<number>>(
       (acc, i) => acc.add(i.x + i.y * X),
       new Set(),
@@ -112,10 +116,10 @@ export const snake: ISnake = {
       y = randomInt(Y);
     } while (positions.has(x + y * X));
 
-    return { x, y };
+    this.float = { x, y };
   },
 
-  isIntercept(p) {
+  intercept(p) {
     for (let i = 3; i < this.points.length;) {
       const c = this.points[i++];
 
@@ -125,5 +129,9 @@ export const snake: ISnake = {
     }
 
     return false;
+  },
+
+  catched(p) {
+    return this.float.x === p.x && this.float.y === p.y;
   },
 };

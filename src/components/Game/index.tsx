@@ -2,7 +2,7 @@ import s from './style.css';
 import { delay, from } from '../../utils';
 import { X, Y } from './consts';
 import { Time } from './Time';
-import { snake, type IPoint } from './snake';
+import { snake } from './snake';
 import { view } from './view';
 
 interface TouchEventListenerObject extends EventListenerObject {
@@ -10,35 +10,30 @@ interface TouchEventListenerObject extends EventListenerObject {
   y: number
 }
 
-let food: IPoint = {
-  x: 0,
-  y: 0,
+const drawFloatPoin = () => {
+  view.remove(snake.float);
+  snake.setFloat();
+  view.add(snake.float);
 };
 
 const start = () => {
   view.bulkRemove(snake.points);
   snake.reset();
-  randomFood();
-};
-
-const randomFood = () => {
-  view.remove(food);
-  food = snake.randomPoin();
-  view.add(food);
+  drawFloatPoin();
 };
 
 const drawSnake = () => {
-  const head = snake.nextPoin();
+  const head = snake.next();
   const len = snake.points.unshift(head);
 
-  if (head.x === food.x && head.y === food.y) {
+  if (snake.catched(head)) {
     snake.size++;
-    randomFood();
+    drawFloatPoin();
   } if (len > snake.size) {
     view.remove(snake.points.pop()!);
   }
 
-  if (snake.isIntercept(head)) {
+  if (snake.intercept(head)) {
     requestAnimationFrame(start);
   } else {
     view.add(head);
@@ -53,7 +48,7 @@ const gameLoop = async () => {
 
 const ready = () => {
   start();
-  snake.turnRight();
+  snake.right();
   requestAnimationFrame(gameLoop);
 };
 
@@ -82,11 +77,11 @@ const touchEventListener: TouchEventListenerObject = {
         this.x = this.y = -1;
 
         if (Math.abs(diffX) > Math.abs(diffY)) {
-          if (diffX > 0) snake.turnRight();
-          else snake.turnLeft();
+          if (diffX > 0) snake.right();
+          else snake.left();
         } else {
-          if (diffY > 0) snake.turnDown();
-          else snake.turnUp();
+          if (diffY > 0) snake.down();
+          else snake.up();
         }
       }
     }
@@ -98,13 +93,13 @@ document.addEventListener('touchmove', touchEventListener);
 document.addEventListener('keydown', (event) => {
   switch (event.code) {
     case 'KeyW':
-    case 'ArrowUp': return snake.turnUp();
+    case 'ArrowUp': return snake.up();
     case 'KeyS':
-    case 'ArrowDown': return snake.turnDown();
+    case 'ArrowDown': return snake.down();
     case 'KeyA':
-    case 'ArrowLeft': return snake.turnLeft();
+    case 'ArrowLeft': return snake.left();
     case 'KeyD':
-    case 'ArrowRight': return snake.turnRight();
+    case 'ArrowRight': return snake.right();
   }
 });
 
