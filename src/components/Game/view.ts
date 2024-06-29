@@ -21,14 +21,14 @@ export const view: IView = {
   cellClass: generator(),
 
   add(p) {
-    this.grid[p.y]?.[p.x]?.classList.add(_icon);
+    this.grid[p.y][p.x].classList.add(_icon);
   },
 
   remove(p) {
-    this.grid[p.y]?.[p.x]?.classList.remove(_icon);
+    this.grid[p.y][p.x].classList.remove(_icon);
   },
 
   bulkRemove(ps) {
-    ps.forEach((p) => this.remove(p));
+    for (const p of ps) this.remove(p);
   },
 };

@@ -38,11 +38,7 @@ const drawSnake = () => {
     view.remove(snake.points.pop()!);
   }
 
-  const intercepted = snake.points.some((p) =>
-    head !== p && head.x === p.x && head.y === p.y,
-  );
-
-  if (intercepted) {
+  if (snake.isIntercept(head)) {
     requestAnimationFrame(start);
   } else {
     view.add(head);

@@ -21,6 +21,7 @@ interface ISnake {
   reset(): void;
   nextPoin(): IPoint;
   randomPoin(): IPoint;
+  isIntercept(p: IPoint): boolean;
 }
 
 const enum Dir {
@@ -99,7 +100,7 @@ export const snake: ISnake = {
 
   randomPoin() {
     const positions = this.points.reduce<Set<number>>(
-      (acc, i) => acc.add(i.x + i.y),
+      (acc, i) => acc.add(i.x + i.y * X),
       new Set(),
     );
 
@@ -109,8 +110,20 @@ export const snake: ISnake = {
     do {
       x = randomInt(X);
       y = randomInt(Y);
-    } while (positions.has(x + y));
+    } while (positions.has(x + y * X));
 
     return { x, y };
+  },
+
+  isIntercept(p) {
+    for (let i = 3; i < this.points.length;) {
+      const c = this.points[i++];
+
+      if (p.x === c.x && p.y === c.y) {
+        return true;
+      }
+    }
+
+    return false;
   },
 };
