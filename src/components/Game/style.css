@@ -11,8 +11,8 @@
 }
 
 .cell {
-  width: 30px;
-  height: 40px;
+  width: 1.8em;
+  height: 2.4em;
   border-right: var(--border);
 }
 
@@ -25,15 +25,17 @@
   background: var(--cl-sunglow) url('./lightning.svg') no-repeat center;
 }
 
-.time {
-  writing-mode: vertical-rl;
-  font-size: 80%;
-  font-weight: bold;
-  width: 30px;
-  height: 60px;
-  border-right: var(--border);
-  color: var(--cl-text);
+.cellt {
+  composes: cell;
+  height: 3.5em;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.label {
+  writing-mode: vertical-rl;
+  font-weight: bold;
+  color: var(--cl-text);
+  font-size: 80%;
 }
