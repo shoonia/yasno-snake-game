@@ -1,5 +1,5 @@
 import { randomInt } from '../../utils';
-import { X, Y } from './consts';
+import { Size } from './consts';
 
 export interface IPoint {
   x: number;
@@ -87,12 +87,12 @@ export const snake: ISnake = {
     this.y += this.dirY;
 
     if (this.x < 0) {
-      this.x = X - 1;
-    } else if (this.x >= X) {
+      this.x = Size.X - 1;
+    } else if (this.x >= Size.X) {
       this.x = 0;
     } else if (this.y < 0) {
-      this.y = Y - 1;
-    } else if (this.y >= Y) {
+      this.y = Size.Y - 1;
+    } else if (this.y >= Size.Y) {
       this.y = 0;
     }
 
@@ -104,7 +104,7 @@ export const snake: ISnake = {
 
   setFloat() {
     const positions = this.points.reduce<Set<number>>(
-      (acc, i) => acc.add(i.x + i.y * X),
+      (acc, i) => acc.add(i.x + i.y * Size.X),
       new Set(),
     );
 
@@ -112,9 +112,9 @@ export const snake: ISnake = {
     let y: number;
 
     do {
-      x = randomInt(X);
-      y = randomInt(Y);
-    } while (positions.has(x + y * X));
+      x = randomInt(Size.X);
+      y = randomInt(Size.Y);
+    } while (positions.has(x + y * Size.X));
 
     this.float = { x, y };
   },

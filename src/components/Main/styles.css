@@ -20,8 +20,14 @@
   margin: 0 0 1em;
 }
 
-@media (max-width: 50em) {
+@media (max-width: 60em) {
   .title {
     font-size: 1.6em;
+  }
+}
+
+@media (max-width: 35em) {
+  .box {
+    margin: 1em auto;
   }
 }

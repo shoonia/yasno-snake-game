@@ -1,6 +1,6 @@
 import s from './style.css';
 import { delay, from } from '../../utils';
-import { X, Y } from './consts';
+import { Size } from './consts';
 import { Time } from './Time';
 import { snake } from './snake';
 import { view } from './view';
@@ -89,7 +89,7 @@ const touchEventListener: TouchEventListenerObject = {
 };
 
 document.addEventListener('touchstart', touchEventListener);
-document.addEventListener('touchmove', touchEventListener);
+document.addEventListener('touchmove', touchEventListener, { passive: true });
 document.addEventListener('keydown', (event) => {
   switch (event.code) {
     case 'KeyW':
@@ -106,14 +106,14 @@ document.addEventListener('keydown', (event) => {
 export const Game: JSX.FC = () =>
   <article ref={ready} class={s.game}>
     <Time />
-    {from(Y, () => {
+    {from(Size.Y, () => {
       const row: HTMLDivElement[] = [];
 
       view.grid.push(row);
 
       return (
         <div class={s.row}>
-          {from(X, () =>
+          {from(Size.X, () =>
             <div
               ref={(div) => row.push(div)}
               class={view.cellClass()}

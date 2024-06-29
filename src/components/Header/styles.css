@@ -3,7 +3,7 @@
   background-color: #fff;
 }
 
-@media (max-width: 50em) {
+@media (max-width: 60em) {
   .header {
     padding: 1em;
   }

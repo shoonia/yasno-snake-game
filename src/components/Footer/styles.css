@@ -8,12 +8,19 @@
 }
 
 .auth {
-  padding: 1em 3em;
+  padding: 3em;
   font-size: 80%;
 }
 
-@media (max-width: 50em) {
-  .auth {
-    padding: 1em;
+@media (max-width: 60em) {
+  .box {
+    justify-content: space-evenly;
+  }
+}
+
+@media (max-width: 45em) {
+  .box {
+    justify-content: space-between;
+    gap: 1em;
   }
 }

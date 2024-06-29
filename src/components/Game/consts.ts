@@ -1,2 +1,6 @@
-export const Y = 7;
-export const X = 24;
+const m35 = window.matchMedia('(max-width: 35em)').matches;
+
+export const Size = {
+  X: m35 ? 14 : 24,
+  Y: 7,
+};

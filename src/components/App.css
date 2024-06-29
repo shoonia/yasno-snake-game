@@ -1,0 +1,14 @@
+.app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .app {
+    height: -webkit-fill-available;
+  }
+}

@@ -1,22 +1,23 @@
 :root {
+  --fn-size: 16px;
   --cl-text: #495a7a;
   --cl-sunglow: #ffd100;
   --cl-accent: #b4b833;
   --border: 0.5px solid #d0e0ea;
 }
 
+html,
+body {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 16px;
+  font-size: var(--fn-size);
   color: var(--cl-text);
   background-color: #eff2f6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
 }
 
 a {
@@ -24,8 +25,8 @@ a {
   text-decoration: underline;
 }
 
-@supports (-webkit-touch-callout: none) {
-  body {
-    height: -webkit-fill-available;
+@media (max-width: 60em) {
+  :root {
+    --fn-size: 14px;
   }
 }

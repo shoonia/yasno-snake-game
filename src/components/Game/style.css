@@ -40,3 +40,18 @@
   color: var(--cl-text);
   font-size: 80%;
 }
+
+@media (max-width: 45em) {
+  .cell {
+    width: 1.4em;
+    height: 2.2em;
+  }
+
+  .icon {
+    background-size: 1em;
+  }
+
+  .label {
+    font-size: 60%;
+  }
+}
