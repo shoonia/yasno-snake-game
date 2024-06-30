@@ -1,12 +1,7 @@
 .header {
-  padding: 1em 3em;
+  padding: 16px 32px;
   background-color: #fff;
   display: flex;
   justify-content: space-between;
-}
-
-@media (max-width: 60em) {
-  .header {
-    padding: 1em;
-  }
+  border-bottom: var(--border);
 }

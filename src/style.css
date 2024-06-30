@@ -25,7 +25,7 @@ a {
   text-decoration: underline;
 }
 
-@media (max-width: 60em) {
+@media (max-width: 780px) {
   :root {
     --fn-size: 14px;
   }

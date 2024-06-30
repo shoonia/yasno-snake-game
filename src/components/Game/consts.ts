@@ -1,6 +1,18 @@
-const m35 = window.matchMedia('(max-width: 35em)').matches;
+const calcWidth = (width: number) => {
+  const x = Math.floor((width - 66) / 22.5);
+
+  return x > 24 ? 24 : x;
+};
 
 export const Size = {
-  X: m35 ? 14 : 24,
+  X : calcWidth(window.innerWidth),
   Y: 7,
 };
+
+window.addEventListener('resize', () => {
+  const x = calcWidth(window.innerWidth);
+
+  if (x !== Size.X) {
+    location.reload();
+  }
+}, { passive: true });

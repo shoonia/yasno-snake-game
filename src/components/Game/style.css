@@ -3,7 +3,8 @@
   background-color: #fff;
   border-top: var(--border);
   border-left: var(--border);
-  touch-action: none;
+  touch-action: manipulation;
+  pointer-events: none;
 }
 
 .row {
@@ -12,8 +13,8 @@
 }
 
 .cell {
-  width: 1.8em;
-  height: 2.4em;
+  width: 28px;
+  height: 38px;
   border-right: var(--border);
 }
 
@@ -28,7 +29,7 @@
 
 .cellt {
   composes: cell;
-  height: 3.5em;
+  height: 56px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -41,14 +42,14 @@
   font-size: 80%;
 }
 
-@media (max-width: 45em) {
+@media (max-width: 780px) {
   .cell {
-    width: 1.4em;
-    height: 2.2em;
+    width: 22px;
+    height: 32px;
   }
 
   .icon {
-    background-size: 1em;
+    background-size: 16px;
   }
 
   .label {

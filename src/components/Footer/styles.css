@@ -2,25 +2,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10%;
-  padding: 1em;
+  gap: 48px;
+  padding: 16px;
   border: var(--border);
 }
 
 .auth {
-  padding: 3em;
+  padding: 32px;
   font-size: 80%;
 }
 
-@media (max-width: 60em) {
+@media (max-width: 780px) {
   .box {
     justify-content: space-evenly;
-  }
-}
-
-@media (max-width: 45em) {
-  .box {
-    justify-content: space-between;
-    gap: 1em;
+    gap: 16px;
   }
 }

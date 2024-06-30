@@ -1,33 +1,40 @@
 .wrapper {
-  padding: 0 1em;
+  padding: 0 16px;
   display: flex;
 }
 
 .box {
-  padding: 2em;
-  margin: 3em auto;
+  padding: 28px;
+  margin: 48px auto;
   background-color: #fff;
   border-bottom: 6px solid var(--cl-sunglow);
   height: fit-content;
-  touch-action: none;
 }
 
 .title {
   font-weight: normal;
-  font-size: 2.5em;
+  font-size: 32px;
   color: #11203e;
   line-height: 1.1;
-  margin: 0 0 1em;
+  margin: 0 0 16px;
 }
 
-@media (max-width: 60em) {
+@media (max-width: 780px) {
+  .box {
+    padding: 22px;
+  }
+
   .title {
-    font-size: 1.6em;
+    font-size: 24px;
   }
 }
 
-@media (max-width: 35em) {
+@media (max-width: 560px) {
+  .wrapper {
+    align-items: center;
+  }
+
   .box {
-    margin: 1em auto;
+    margin: 16px auto;
   }
 }
