@@ -3,6 +3,7 @@
   var title = manifest.name;
   var homepage = manifest.scope;
   var description = manifest.description;
+  var icon512 = new URL('icon-512.png', homepage).href;
 %>
 
 <!DOCTYPE html>
@@ -17,6 +18,7 @@
   <% } %>
   <title><%= title %></title>
   <meta name="google-site-verification" content="w0qQlO5FQyLU478TxuRuz309bMP5Yd5zc5pohs56qhk" />
+  <meta name="theme-color" content="<%= manifest.theme_color %>">
   <meta name="description" content="<%= description %>">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:creator" content="@_shoonia">
@@ -25,8 +27,9 @@
   <meta property="og:description" content="<%= description %>">
   <meta property="og:type" content="website">
   <meta property="og:url" content="<%= homepage %>">
+  <meta property="og:image" content="<%= icon512  %>"/>
   <link rel="canonical" href="<%= homepage %>">
-  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="shortcut icon" href="favicon.ico" sizes="32x32">
 </head>
 
 <body>
