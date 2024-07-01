@@ -13,6 +13,7 @@ interface ISnake {
   y: number;
   size: number;
   dir: Dir;
+  draftDir: Dir,
   dirX: number;
   dirY: number;
   up(): void;
@@ -39,6 +40,7 @@ export const snake: ISnake = {
   y: 1,
   size: 1,
   dir: Dir.Empty,
+  draftDir: Dir.Empty,
   dirX: 0,
   dirY: 0,
   points: [],
@@ -46,7 +48,7 @@ export const snake: ISnake = {
 
   up() {
     if (this.dir !== Dir.Down) {
-      this.dir = Dir.Up;
+      this.draftDir = Dir.Up;
       this.dirX = 0;
       this.dirY = -1;
     }
@@ -54,7 +56,7 @@ export const snake: ISnake = {
 
   down() {
     if (this.dir !== Dir.Up) {
-      this.dir = Dir.Down;
+      this.draftDir = Dir.Down;
       this.dirX = 0;
       this.dirY = 1;
     }
@@ -62,7 +64,7 @@ export const snake: ISnake = {
 
   left() {
     if (this.dir !== Dir.Right) {
-      this.dir = Dir.Left;
+      this.draftDir = Dir.Left;
       this.dirX = -1;
       this.dirY = 0;
     }
@@ -70,7 +72,7 @@ export const snake: ISnake = {
 
   right() {
     if (this.dir !== Dir.Left) {
-      this.dir = Dir.Right;
+      this.draftDir = Dir.Right;
       this.dirX = 1;
       this.dirY = 0;
     }
@@ -79,12 +81,14 @@ export const snake: ISnake = {
   reset() {
     this.points.length = this.dirX = this.dirY = 0;
     this.size = this.x = this.y = 1;
-    this.dir = Dir.Empty;
+    this.draftDir = this.dir = Dir.Empty;
   },
 
   next() {
     const x = this.x + this.dirX;
     const y = this.y + this.dirY;
+
+    this.dir = this.draftDir;
 
     return {
       x: this.x = x < 0 ? Size.X - 1 : x >= Size.X ? 0 : x,
