@@ -1,5 +1,5 @@
 import s from './style.css';
-import { delay, from } from '../../utils';
+import { from } from '../../utils';
 import { Size } from './consts';
 import { Time } from './Time';
 import { snake } from './snake';
@@ -40,11 +40,11 @@ const drawSnake = () => {
   }
 };
 
-const gameLoop = async () => {
-  await delay(250);
-  requestAnimationFrame(gameLoop);
-  drawSnake();
-};
+const gameLoop = () =>
+  setTimeout(() => {
+    drawSnake();
+    requestAnimationFrame(gameLoop);
+  }, 250);
 
 const ready = () => {
   start();

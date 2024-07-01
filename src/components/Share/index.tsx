@@ -2,12 +2,11 @@ import { useText } from 'jsx-dom-runtime';
 
 import s from './styles.css';
 import m from '../../../static/manifest.json';
-import { delay } from '../../utils';
 
 const [text, setText] = useText('');
 
 export const Share: JSX.FC = () => {
-  const copy: JSX.EventListener = async () => {
+  const copy: JSX.EventListener = () => {
     if (navigator?.share) {
       navigator.share({
         url: m.scope,
@@ -15,10 +14,9 @@ export const Share: JSX.FC = () => {
         title: m.name,
       });
     } else {
-      await navigator.clipboard?.writeText(m.scope);
+      navigator.clipboard?.writeText(m.scope);
       setText('скопійовано до буфера обміну');
-      await delay(3000);
-      setText('');
+      setTimeout(setText, 3000, '');
     }
   };
 
