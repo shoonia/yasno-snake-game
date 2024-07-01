@@ -26,14 +26,14 @@ const drawSnake = () => {
   const head = snake.next();
   const len = snake.points.unshift(head);
 
-  if (snake.catched(head)) {
+  if (snake.catched()) {
     snake.size++;
     drawFloatPoin();
   } if (len > snake.size) {
     view.remove(snake.points.pop()!);
   }
 
-  if (snake.intercept(head)) {
+  if (snake.intercept()) {
     requestAnimationFrame(start);
   } else {
     view.add(head);
