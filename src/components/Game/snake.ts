@@ -83,22 +83,12 @@ export const snake: ISnake = {
   },
 
   next() {
-    this.x += this.dirX;
-    this.y += this.dirY;
-
-    if (this.x < 0) {
-      this.x = Size.X - 1;
-    } else if (this.x >= Size.X) {
-      this.x = 0;
-    } else if (this.y < 0) {
-      this.y = Size.Y - 1;
-    } else if (this.y >= Size.Y) {
-      this.y = 0;
-    }
+    const x = this.x + this.dirX;
+    const y = this.y + this.dirY;
 
     return {
-      x: this.x,
-      y: this.y,
+      x: this.x = x < 0 ? Size.X - 1 : x >= Size.X ? 0 : x,
+      y: this.y = y < 0 ? Size.Y - 1 : y >= Size.Y ? 0 : y,
     };
   },
 

@@ -13,8 +13,7 @@
     "test": "tsc"
   },
   "dependencies": {
-    "jsx-dom-runtime": "^0.70.0",
-    "storeon-velo": "^5.0.0-rc.5"
+    "jsx-dom-runtime": "^0.70.0"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.7",
@@ -35,7 +34,7 @@
     "html-webpack-plugin": "^5.6.0",
     "mini-css-class-name": "^0.15.1",
     "mini-css-extract-plugin": "^2.9.0",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.39",
     "postcss-loader": "^8.1.1",
     "style-loader": "^4.0.0",
     "stylelint": "^16.6.1",
