@@ -4,6 +4,7 @@ import { Size } from './consts';
 import { Time } from './Time';
 import { snake } from './snake';
 import { view } from './view';
+import { setScope } from '../Header/scope';
 
 interface TouchEventListenerObject extends EventListenerObject {
   x: number;
@@ -28,6 +29,7 @@ const drawSnake = () => {
 
   if (snake.catched()) {
     snake.size++;
+    setScope(snake.size - 1);
     drawFloatPoin();
   } if (len > snake.size) {
     view.remove(snake.points.pop()!);

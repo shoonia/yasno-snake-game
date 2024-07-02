@@ -5,3 +5,20 @@
   justify-content: space-between;
   border-bottom: var(--border);
 }
+
+.bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.item {
+  background: var(--cl-bg-haze);
+  border: 1px solid var(--cl-bg-haze);
+  border-radius: 5px;
+  color: #212529;
+  display: flex;
+  font-size: 14px;
+  padding: 5px 10px;
+}
