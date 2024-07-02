@@ -4,6 +4,7 @@ import { Size } from './consts';
 import { Time } from './Time';
 import { snake } from './snake';
 import { view } from './view';
+import { setScope } from '../Header/scope';
 
 interface TouchEventListenerObject extends EventListenerObject {
   x: number;
@@ -28,6 +29,7 @@ const drawSnake = () => {
 
   if (snake.catched()) {
     snake.size++;
+    setScope(snake.size - 1);
     drawFloatPoin();
   } if (len > snake.size) {
     view.remove(snake.points.pop()!);
@@ -42,14 +44,25 @@ const drawSnake = () => {
 
 const gameLoop = () =>
   setTimeout(() => {
-    drawSnake();
-    requestAnimationFrame(gameLoop);
+    if (snake.active) {
+      drawSnake();
+      requestAnimationFrame(gameLoop);
+    }
   }, 250);
 
 const ready = () => {
   start();
   snake.right();
   requestAnimationFrame(gameLoop);
+};
+
+const pause = () => {
+  if (snake.active) {
+    snake.active = false;
+  } else {
+    snake.active = true;
+    requestAnimationFrame(gameLoop);
+  }
 };
 
 const touchEventListener: TouchEventListenerObject = {
@@ -100,6 +113,8 @@ document.addEventListener('keydown', (event) => {
     case 'ArrowLeft': return snake.left();
     case 'KeyD':
     case 'ArrowRight': return snake.right();
+    case 'Pause':
+    case 'Space': return pause();
   }
 });
 
