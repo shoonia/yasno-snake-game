@@ -4,6 +4,7 @@ import { Size } from './consts';
 export interface IPoint {
   x: number;
   y: number;
+  isFloat?: true,
 }
 
 interface ISnake {
@@ -37,7 +38,7 @@ const enum Dir {
 
 export const snake: ISnake = {
   points: [],
-  float: { x: 0, y: 0 },
+  float: { x: 0, y: 0, isFloat: true },
   x: 1,
   y: 1,
   size: 1,
@@ -110,7 +111,7 @@ export const snake: ISnake = {
       y = randomInt(Size.Y);
     } while (positions.has(x + y * Size.X));
 
-    this.float = { x, y };
+    this.float = { x, y, isFloat: true };
   },
 
   intercept() {

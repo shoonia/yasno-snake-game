@@ -21,11 +21,11 @@ export const view: IView = {
   cellClass: generator(),
 
   add(p) {
-    this.grid[p.y][p.x].classList.add(s.icon);
+    this.grid[p.y][p.x].classList.add(p.isFloat ? s.float : s.point);
   },
 
   remove(p) {
-    this.grid[p.y][p.x].classList.remove(s.icon);
+    this.grid[p.y][p.x].classList.remove(s.point, s.float);
   },
 
   bulkRemove(ps) {

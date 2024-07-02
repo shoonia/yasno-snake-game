@@ -23,8 +23,12 @@
   background-color: #f2f5f7;
 }
 
-.icon {
+.point {
   background: var(--cl-sunglow) url('./lightning.svg') no-repeat center;
+}
+
+.float {
+  background: rgb(253 214 49 / 50%) url('./lightning.svg') no-repeat center;
 }
 
 .cellt {
