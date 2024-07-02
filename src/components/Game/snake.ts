@@ -17,6 +17,7 @@ interface ISnake {
   nextDir: Dir,
   dirX: number;
   dirY: number;
+  active: boolean;
   up(): void;
   down(): void;
   left(): void;
@@ -46,9 +47,10 @@ export const snake: ISnake = {
   nextDir: Dir.Empty,
   dirX: 0,
   dirY: 0,
+  active: true,
 
   up() {
-    if (this.dir !== Dir.Down) {
+    if (this.active && this.dir !== Dir.Down) {
       this.nextDir = Dir.Up;
       this.dirX = 0;
       this.dirY = -1;
@@ -56,7 +58,7 @@ export const snake: ISnake = {
   },
 
   down() {
-    if (this.dir !== Dir.Up) {
+    if (this.active && this.dir !== Dir.Up) {
       this.nextDir = Dir.Down;
       this.dirX = 0;
       this.dirY = 1;
@@ -64,7 +66,7 @@ export const snake: ISnake = {
   },
 
   left() {
-    if (this.dir !== Dir.Right) {
+    if (this.active && this.dir !== Dir.Right) {
       this.nextDir = Dir.Left;
       this.dirX = -1;
       this.dirY = 0;
@@ -72,7 +74,7 @@ export const snake: ISnake = {
   },
 
   right() {
-    if (this.dir !== Dir.Left) {
+    if (this.active && this.dir !== Dir.Left) {
       this.nextDir = Dir.Right;
       this.dirX = 1;
       this.dirY = 0;
@@ -83,6 +85,7 @@ export const snake: ISnake = {
     this.points.length = this.dirX = this.dirY = 0;
     this.size = this.x = this.y = 1;
     this.nextDir = this.dir = Dir.Empty;
+    this.active = true;
   },
 
   next() {

@@ -42,14 +42,25 @@ const drawSnake = () => {
 
 const gameLoop = () =>
   setTimeout(() => {
-    drawSnake();
-    requestAnimationFrame(gameLoop);
+    if (snake.active) {
+      drawSnake();
+      requestAnimationFrame(gameLoop);
+    }
   }, 250);
 
 const ready = () => {
   start();
   snake.right();
   requestAnimationFrame(gameLoop);
+};
+
+const pause = () => {
+  if (snake.active) {
+    snake.active = false;
+  } else {
+    snake.active = true;
+    requestAnimationFrame(gameLoop);
+  }
 };
 
 const touchEventListener: TouchEventListenerObject = {
@@ -100,6 +111,8 @@ document.addEventListener('keydown', (event) => {
     case 'ArrowLeft': return snake.left();
     case 'KeyD':
     case 'ArrowRight': return snake.right();
+    case 'Pause':
+    case 'Space': return pause();
   }
 });
 
