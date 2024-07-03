@@ -112,7 +112,7 @@ export default ({ NODE_ENV }) => {
         {
           oneOf: [
             {
-              test: /\.svg/,
+              test: /\.(svg|png)/,
               type: 'asset/resource',
               generator: {
                 filename: '[name][ext]',

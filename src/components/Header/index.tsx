@@ -1,6 +1,7 @@
 import s from './styles.css';
 
-import logo from './logo.svg';
+import logo from './images/logo.svg';
+import blackout from './images/blackout.png';
 import { Share } from '../Share';
 import { scope } from './scope';
 
@@ -10,9 +11,12 @@ export const Header: JSX.FC = () =>
       <img src={logo} width="100" alt="Шо не Yasno?" />
     </a>
     <div class={s.bar}>
-      <span class={s.item} aria-label="результат">
-        {scope}
-      </span>
+      <div class={s.item}>
+        <img src={blackout} alt="перекреслена молнія" width="28" height="28" role="presentation" />
+        <span aria-label="результат">
+          {scope}
+        </span>
+      </div>
       <Share />
     </div>
   </header>;
