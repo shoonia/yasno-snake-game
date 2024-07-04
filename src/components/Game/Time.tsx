@@ -4,7 +4,7 @@ import { from } from '../../utils';
 import { Size } from './consts';
 
 export const Time: JSX.FC = () =>
-  <div class={s.row}>
+  <div class={s.row} role="presentation">
     {from(Size.X, (i) =>
       <div class={s.cellt}>
         <span class={s.label}>

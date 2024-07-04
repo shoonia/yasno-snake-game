@@ -5,6 +5,7 @@
   border-left: var(--border);
   touch-action: manipulation;
   pointer-events: none;
+  user-select: none;
 }
 
 .row {
