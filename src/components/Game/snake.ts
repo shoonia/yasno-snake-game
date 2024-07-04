@@ -1,4 +1,4 @@
-import { randomInt } from '../../utils';
+import { from } from '../../utils';
 import { Size } from './consts';
 
 export interface IPoint {
@@ -9,6 +9,7 @@ export interface IPoint {
 
 interface ISnake {
   readonly points: IPoint[];
+  readonly orders: number[];
   float: IPoint;
   x: number;
   y: number;
@@ -39,6 +40,7 @@ const enum Dir {
 
 export const snake: ISnake = {
   points: [],
+  orders: from(Size.X * Size.Y, (i) => i),
   float: { x: 0, y: 0, isFloat: true },
   x: 1,
   y: 1,
@@ -95,8 +97,8 @@ export const snake: ISnake = {
     this.dir = this.nextDir;
 
     return {
-      x: this.x = nx < 0 ? Size.X - 1 : nx >= Size.X ? 0 : nx,
-      y: this.y = ny < 0 ? Size.Y - 1 : ny >= Size.Y ? 0 : ny,
+      x: (this.x = nx < 0 ? Size.X - 1 : nx >= Size.X ? 0 : nx),
+      y: (this.y = ny < 0 ? Size.Y - 1 : ny >= Size.Y ? 0 : ny),
     };
   },
 
@@ -106,15 +108,15 @@ export const snake: ISnake = {
       new Set(),
     );
 
-    let x: number;
-    let y: number;
+    const orders = this.orders.filter((i) => !positions.has(i));
+    const i = orders[Math.floor(Math.random() * orders.length)];
+    const y = Math.floor(i / Size.X);
 
-    do {
-      x = randomInt(Size.X);
-      y = randomInt(Size.Y);
-    } while (positions.has(x + y * Size.X));
-
-    this.float = { x, y, isFloat: true };
+    this.float = {
+      x: i < Size.X ? i : i - (y * Size.X),
+      y,
+      isFloat: true,
+    };
   },
 
   intercept() {
