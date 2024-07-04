@@ -4,6 +4,7 @@
   align-items: center;
   gap: 1em;
   text-align: right;
+  position: relative;
 }
 
 .btn {
@@ -26,4 +27,12 @@
 .btn:focus {
   color: #fff;
   background-color: var(--cl-accent);
+}
+
+.popup {
+  position: absolute;
+  right: 50%;
+  top: 200%;
+  user-select: none;
+  white-space: nowrap;
 }
