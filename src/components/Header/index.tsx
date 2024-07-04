@@ -12,7 +12,7 @@ export const Header: JSX.FC = () =>
     </a>
     <div class={s.bar}>
       <div class={s.item}>
-        <img src={blackout} alt="перекреслена молнія" width="28" height="28" role="presentation" />
+        <img src={blackout} alt="перекреслена молнія" width="28" height="28" />
         <span aria-label="результат">
           {scope}
         </span>
