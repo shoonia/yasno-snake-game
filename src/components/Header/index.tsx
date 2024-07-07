@@ -1,7 +1,7 @@
 import s from './styles.css';
 
-import logo from './images/logo.svg';
-import blackout from './images/blackout.png';
+import logo from '../../images/logo.svg';
+import blackout from '../../images/blackout.png';
 import { Share } from '../Share';
 import { scope } from './scope';
 

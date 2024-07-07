@@ -1,7 +1,7 @@
 import s from './styles.css';
-import cba from './images/cba.svg';
-import fp from './images/fp.svg';
-import u24 from './images/u24.svg';
+import cba from '../../images/cba.svg';
+import fp from '../../images/fp.svg';
+import u24 from '../../images/u24.svg';
 
 export const Footer: JSX.FC = () =>
   <footer>

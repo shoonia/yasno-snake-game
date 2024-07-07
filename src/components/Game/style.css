@@ -25,11 +25,11 @@
 }
 
 .point {
-  background: var(--cl-sunglow) url('./lightning.svg') no-repeat center;
+  background: var(--cl-sunglow) url('../../images/lightning.svg') no-repeat center;
 }
 
 .float {
-  background: rgb(253 214 49 / 50%) url('./lightning.svg') no-repeat center;
+  background: rgb(253 214 49 / 50%) url('../../images/lightning.svg') no-repeat center;
 }
 
 .cellt {
