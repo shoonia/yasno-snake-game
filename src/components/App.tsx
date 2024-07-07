@@ -4,9 +4,11 @@ import { Main } from './Main';
 import { Footer } from './Footer';
 import { Analytics } from './Analytics';
 import { PauseModal } from './PauseModal';
+import { InstructionModal } from './InstructionModal';
 
 export const App: JSX.FC = () =>
   <>
+    <InstructionModal />
     <div class={s.app}>
       <Header />
       <Main />

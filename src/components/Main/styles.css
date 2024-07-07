@@ -11,21 +11,9 @@
   height: fit-content;
 }
 
-.title {
-  font-weight: normal;
-  font-size: 32px;
-  color: #11203e;
-  line-height: 1.1;
-  margin: 0 0 16px;
-}
-
 @media (max-width: 780px) {
   .box {
     padding: 22px;
-  }
-
-  .title {
-    font-size: 24px;
   }
 }
 
