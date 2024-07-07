@@ -1,0 +1,9 @@
+.modal {
+  outline: none;
+  border: 0;
+  top: 50%;
+}
+
+.modal::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+}

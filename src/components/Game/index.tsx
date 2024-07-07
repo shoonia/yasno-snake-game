@@ -5,6 +5,7 @@ import { Time } from './Time';
 import { snake } from './snake';
 import { view } from './view';
 import { setScope } from '../Header/scope';
+import { tooglePauseModal } from '../PauseModal';
 
 interface TouchEventListenerObject extends EventListenerObject {
   x: number;
@@ -63,6 +64,8 @@ const pause = () => {
     snake.active = true;
     requestAnimationFrame(gameLoop);
   }
+
+  tooglePauseModal(snake.active);
 };
 
 const touchEventListener: TouchEventListenerObject = {
