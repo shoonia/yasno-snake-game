@@ -4,12 +4,14 @@
   justify-content: center;
   gap: 48px;
   padding: 16px;
+  margin: 0;
   border: var(--border);
   list-style: none;
+  user-select: none;
 }
 
 .auth {
-  padding: 32px;
+  padding: 16px 32px;
   font-size: 80%;
 }
 
@@ -17,5 +19,11 @@
   .box {
     justify-content: space-evenly;
     gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .auth {
+    padding: 16px;
   }
 }

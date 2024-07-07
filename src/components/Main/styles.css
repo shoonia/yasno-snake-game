@@ -29,9 +29,10 @@
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 600px) {
   .wrapper {
     align-items: center;
+    padding: 0;
   }
 
   .box {

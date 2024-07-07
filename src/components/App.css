@@ -1,7 +1,6 @@
 .app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
   display: grid;
   grid-template-rows: auto 1fr auto;

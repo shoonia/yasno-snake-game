@@ -1,5 +1,5 @@
 const calcWidth = (width: number) => {
-  const x = Math.floor((width - 66) / 22.5);
+  const x = Math.floor((width - 32) / 22.5);
 
   return x > 24 ? 24 : x;
 };
