@@ -29,8 +29,24 @@ a {
   text-decoration: underline;
 }
 
+h1 {
+  font-size: 32px;
+  margin: 0 0 16px;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: normal;
+  line-height: 1.1;
+}
+
 @media (max-width: 780px) {
   :root {
     --fn-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px;
   }
 }

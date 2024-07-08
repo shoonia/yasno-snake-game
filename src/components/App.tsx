@@ -4,6 +4,7 @@ import { Main } from './Main';
 import { Footer } from './Footer';
 import { Analytics } from './Analytics';
 import { PauseModal } from './PauseModal';
+import { InstructionModal } from './InstructionModal';
 
 export const App: JSX.FC = () =>
   <>
@@ -11,7 +12,8 @@ export const App: JSX.FC = () =>
       <Header />
       <Main />
       <Footer />
+      <InstructionModal />
+      <PauseModal />
     </div>
-    <PauseModal />
     <Analytics />
   </>;
