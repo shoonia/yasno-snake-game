@@ -20,3 +20,15 @@
   padding: 8px 25px;
   outline: none;
 }
+
+.x {
+  appearance: none;
+  border: none;
+  color: var(--cl-text);
+  background: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}

@@ -8,12 +8,12 @@ import { InstructionModal } from './InstructionModal';
 
 export const App: JSX.FC = () =>
   <>
-    <InstructionModal />
     <div class={s.app}>
       <Header />
       <Main />
       <Footer />
+      <InstructionModal />
+      <PauseModal />
     </div>
-    <PauseModal />
     <Analytics />
   </>;
