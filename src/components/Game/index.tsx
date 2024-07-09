@@ -107,6 +107,9 @@ const touchEventListener: TouchEventListenerObject = {
 document.addEventListener('touchstart', touchEventListener);
 document.addEventListener('touchmove', touchEventListener, { passive: true });
 document.addEventListener('keydown', (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+
   switch (event.code) {
     case 'KeyW':
     case 'ArrowUp': return snake.up();
@@ -117,6 +120,7 @@ document.addEventListener('keydown', (event) => {
     case 'KeyD':
     case 'ArrowRight': return snake.right();
     case 'Pause':
+    case 'Escape':
     case 'Space': return pause();
   }
 });
