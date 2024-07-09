@@ -39,7 +39,7 @@ export const InstructionModal: JSX.FC = () =>
         </svg>
       </button>
       <button type="submit" class={s.close}>
-        Закрити
+        Зрозуміло
       </button>
     </form>
   </dialog>;
