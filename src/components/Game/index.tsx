@@ -2,7 +2,7 @@ import s from './style.css';
 import { from } from '../../utils';
 import { Size } from './consts';
 import { Time } from './Time';
-import { snake } from './snake';
+import { Snake } from './snake';
 import { view } from './view';
 import { setScope } from '../Header/scope';
 import { tooglePauseModal } from '../PauseModal';
@@ -11,6 +11,8 @@ interface TouchEventListenerObject extends EventListenerObject {
   x: number;
   y: number
 }
+
+const snake = new Snake();
 
 const drawFloatPoin = () => {
   view.remove(snake.float);
