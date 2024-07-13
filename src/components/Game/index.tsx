@@ -109,23 +109,25 @@ const touchEventListener: TouchEventListenerObject = {
 document.addEventListener('touchstart', touchEventListener);
 document.addEventListener('touchmove', touchEventListener, { passive: true });
 document.addEventListener('keydown', (event) => {
-  event.preventDefault();
-  event.stopPropagation();
-
   switch (event.code) {
     case 'KeyW':
-    case 'ArrowUp': return snake.up();
+    case 'ArrowUp': snake.up(); break;
     case 'KeyS':
-    case 'ArrowDown': return snake.down();
+    case 'ArrowDown': snake.down(); break;
     case 'KeyA':
-    case 'ArrowLeft': return snake.left();
+    case 'ArrowLeft': snake.left(); break;
     case 'KeyD':
-    case 'ArrowRight': return snake.right();
+    case 'ArrowRight': snake.right(); break;
     case 'Pause':
     case 'Escape':
     case 'Backspace':
-    case 'Space': return pause();
+    case 'Space': pause(); break;
+    default:
+      return;
   }
+
+  event.preventDefault();
+  event.stopPropagation();
 });
 
 export const Game: JSX.FC = () =>
