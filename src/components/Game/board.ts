@@ -4,15 +4,20 @@ const calcWidth = (width: number) => {
   return x > 24 ? 24 : x;
 };
 
-export const Size = {
-  X : calcWidth(window.innerWidth),
-  Y: 7,
+export interface IBoard {
+  readonly x: number;
+  readonly y: number;
+}
+
+export const board: IBoard = {
+  x: calcWidth(window.innerWidth),
+  y: 7,
 };
 
 window.addEventListener('resize', () => {
   const x = calcWidth(window.innerWidth);
 
-  if (x !== Size.X) {
+  if (x !== board.x) {
     location.reload();
   }
 }, { passive: true });

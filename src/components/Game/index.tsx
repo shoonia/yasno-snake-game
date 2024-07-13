@@ -1,6 +1,6 @@
 import s from './style.css';
 import { from } from '../../utils';
-import { Size } from './consts';
+import { board } from './board';
 import { Time } from './Time';
 import { Snake } from './snake';
 import { view } from './view';
@@ -12,7 +12,7 @@ interface TouchEventListenerObject extends EventListenerObject {
   y: number
 }
 
-const snake = new Snake();
+const snake = new Snake(board);
 
 const drawFloatPoin = () => {
   view.remove(snake.float);
@@ -130,14 +130,14 @@ document.addEventListener('keydown', (event) => {
 export const Game: JSX.FC = () =>
   <article ref={ready} class={s.game}>
     <Time />
-    {from(Size.Y, () => {
+    {from(board.y, () => {
       const row: HTMLDivElement[] = [];
 
       view.grid.push(row);
 
       return (
         <div class={s.row}>
-          {from(Size.X, () =>
+          {from(board.x, () =>
             <div
               ref={(div) => row.push(div)}
               class={view.cellClass()}

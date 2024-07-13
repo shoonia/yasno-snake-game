@@ -1,5 +1,5 @@
+import type { IBoard } from './board';
 import { from } from '../../utils';
-import { Size } from './consts';
 
 export interface IPoint {
   readonly x: number;
@@ -17,7 +17,8 @@ const enum Dir {
 
 export class Snake {
   readonly points: IPoint[] = [];
-  readonly #orders = from(Size.X * Size.Y, (i) => i);
+  readonly #orders: number[];
+  readonly #board: IBoard;
 
   float: IPoint = { x: 0, y: 0, isFloat: true };
   size = 1;
@@ -29,6 +30,11 @@ export class Snake {
   #nextDir = Dir.Empty;
   #dirX = 0;
   #dirY = 0;
+
+  constructor(board: IBoard) {
+    this.#board = board;
+    this.#orders = from(board.x * board.y, (i) => i);
+  }
 
   up() {
     if (this.active && this.#dir !== Dir.Down) {
@@ -72,27 +78,29 @@ export class Snake {
   next() {
     const nx = this.#x + this.#dirX;
     const ny = this.#y + this.#dirY;
+    const b = this.#board;
 
     this.#dir = this.#nextDir;
 
     return {
-      x: (this.#x = nx < 0 ? Size.X - 1 : nx >= Size.X ? 0 : nx),
-      y: (this.#y = ny < 0 ? Size.Y - 1 : ny >= Size.Y ? 0 : ny),
+      x: (this.#x = nx < 0 ? b.x - 1 : nx >= b.x ? 0 : nx),
+      y: (this.#y = ny < 0 ? b.y - 1 : ny >= b.y ? 0 : ny),
     };
   }
 
   setFloat() {
+    const b = this.#board;
     const positions = this.points.reduce<Set<number>>(
-      (acc, i) => acc.add(i.x + i.y * Size.X),
+      (acc, i) => acc.add(i.x + i.y * b.x),
       new Set(),
     );
 
     const orders = this.#orders.filter((i) => !positions.has(i));
     const i = orders[Math.floor(Math.random() * orders.length)];
-    const y = Math.floor(i / Size.X);
+    const y = Math.floor(i / b.x);
 
     this.float = {
-      x: i < Size.X ? i : i - (y * Size.X),
+      x: i < b.x ? i : i - (y * b.x),
       y,
       isFloat: true,
     };
