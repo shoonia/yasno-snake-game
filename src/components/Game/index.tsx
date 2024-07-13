@@ -9,7 +9,7 @@ import { tooglePauseModal } from '../PauseModal';
 
 interface TouchEventListenerObject extends EventListenerObject {
   x: number;
-  y: number
+  y: number;
 }
 
 const snake = new Snake(board);
@@ -123,6 +123,7 @@ document.addEventListener('keydown', (event) => {
     case 'ArrowRight': return snake.right();
     case 'Pause':
     case 'Escape':
+    case 'Backspace':
     case 'Space': return pause();
   }
 });
