@@ -1,16 +1,23 @@
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import js from '@eslint/js';
+import ts from 'typescript-eslint';
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...tseslint.configs.stylistic,
+export default ts.config(
   {
     ignores: [
-      'webpack.config.cjs',
-      'scripts',
       'dist',
     ],
+  },
+  js.configs.recommended,
+  ...ts.configs.recommended,
+  ...ts.configs.stylistic,
+  {
+    languageOptions: {
+      ecmaVersion: 2024,
+      sourceType: 'module',
+      globals: {
+        process: 'readonly',
+      },
+    },
     rules: {
       'no-else-return': 'error',
       'no-trailing-spaces': 'error',
