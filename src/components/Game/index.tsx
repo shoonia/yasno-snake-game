@@ -54,7 +54,7 @@ const gameLoop = () =>
   }, 250);
 
 const ready = () => {
-  start();
+  drawFloatPoin();
   snake.right();
   requestAnimationFrame(gameLoop);
 };

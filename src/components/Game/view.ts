@@ -21,7 +21,7 @@ export const view: IView = {
   cellClass: generator(),
 
   add(p) {
-    this.grid[p.y][p.x].classList.add(p.isFloat ? s.float : s.point);
+    this.grid[p.y][p.x].classList.add(p.float ? s.float : s.point);
   },
 
   remove(p) {

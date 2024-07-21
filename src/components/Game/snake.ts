@@ -4,7 +4,7 @@ import { from } from '../../utils';
 export interface IPoint {
   readonly x: number;
   readonly y: number;
-  readonly isFloat?: true,
+  readonly float?: true,
 }
 
 const enum Dir {
@@ -20,7 +20,7 @@ export class Snake {
   readonly #orders: number[];
   readonly #board: IBoard;
 
-  float: IPoint = { x: 0, y: 0, isFloat: true };
+  float: IPoint = { x: 0, y: 0, float: true };
   size = 1;
   active = true;
 
@@ -36,7 +36,7 @@ export class Snake {
     this.#orders = from(board.x * board.y, (i) => i);
   }
 
-  up() {
+  up(): void {
     if (this.active && this.#dir !== Dir.Down) {
       this.#nextDir = Dir.Up;
       this.#dirX = 0;
@@ -44,7 +44,7 @@ export class Snake {
     }
   }
 
-  down() {
+  down(): void {
     if (this.active && this.#dir !== Dir.Up) {
       this.#nextDir = Dir.Down;
       this.#dirX = 0;
@@ -52,7 +52,7 @@ export class Snake {
     }
   }
 
-  left() {
+  left(): void {
     if (this.active && this.#dir !== Dir.Right) {
       this.#nextDir = Dir.Left;
       this.#dirX = -1;
@@ -60,7 +60,7 @@ export class Snake {
     }
   }
 
-  right() {
+  right(): void {
     if (this.active && this.#dir !== Dir.Left) {
       this.#nextDir = Dir.Right;
       this.#dirX = 1;
@@ -68,14 +68,14 @@ export class Snake {
     }
   }
 
-  reset() {
+  reset(): void {
     this.points.length = this.#dirX = this.#dirY = 0;
     this.size = this.#x = this.#y = 1;
     this.#nextDir = this.#dir = Dir.Empty;
     this.active = true;
   }
 
-  next() {
+  next(): IPoint {
     const nx = this.#x + this.#dirX;
     const ny = this.#y + this.#dirY;
     const b = this.#board;
@@ -88,7 +88,7 @@ export class Snake {
     };
   }
 
-  setFloat() {
+  setFloat(): void {
     const b = this.#board;
     const positions = this.points.reduce<Set<number>>(
       (acc, i) => acc.add(i.x + i.y * b.x),
@@ -102,11 +102,11 @@ export class Snake {
     this.float = {
       x: i < b.x ? i : i - (y * b.x),
       y,
-      isFloat: true,
+      float: true,
     };
   }
 
-  intercept() {
+  intercept(): boolean {
     for (let i = 4; i < this.points.length;) {
       const p = this.points[i++];
 
@@ -118,7 +118,7 @@ export class Snake {
     return false;
   }
 
-  catched() {
+  catched(): boolean {
     return this.float.x === this.#x && this.float.y === this.#y;
   }
 }
