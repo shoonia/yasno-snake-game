@@ -2,6 +2,7 @@ import { useRef } from 'jsx-dom-runtime';
 
 import s from './styles.css';
 import { LightningIcon } from './LightningIcon';
+import { Keyboard } from './Keyboard';
 
 const ref = useRef<HTMLDialogElement>();
 
@@ -25,7 +26,7 @@ export const InstructionModal: JSX.FC = () =>
     </ul>
     <h3>Як грати (це для зумерів та бумерів)</h3>
     <p>
-      <strong>На компі:</strong> тицяй стрілочки для керування рухомим <LightningIcon />, щоб приєднатись до статичного <LightningIcon /> та зібрати найдовшу зміючку.
+      <strong>На компі:</strong> тицяй стрілочки <Keyboard /> для керування рухомим <LightningIcon />, щоб приєднатись до статичного <LightningIcon /> та зібрати найдовшу зміючку.
     </p>
     <p><strong>
       З мобілочки:</strong> по суті сейм, але замість стрілочок свайпай пальчиком в необхідний момент в необхідному напрямку.
