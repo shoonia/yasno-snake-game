@@ -2,12 +2,16 @@
   outline: none;
   border: none;
   border-bottom: 6px solid var(--cl-sunglow);
-  padding: 22px;
+  padding: 0;
   color: var(--cl-text);
 }
 
 .modal::backdrop {
   background-color: rgb(0 0 0 / 50%);
+}
+
+.content {
+  padding: 22px;
 }
 
 .close {
