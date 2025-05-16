@@ -56,10 +56,6 @@ const ready = () => {
   gameLoop();
 };
 
-const pause = () => {
-  tooglePauseModal(snake.active = !snake.active);
-};
-
 const touchEventListener: TouchEventListenerObject = {
   x: -1,
   y: -1,
@@ -111,7 +107,7 @@ document.addEventListener('keydown', (event) => {
     case 'Pause':
     case 'Escape':
     case 'Backspace':
-    case 'Space': pause(); break;
+    case 'Space': tooglePauseModal(snake.active = !snake.active); break;
     default:
       return;
   }
