@@ -20,54 +20,44 @@ const drawFloatPoin = () => {
   view.add(snake.float);
 };
 
-const start = () => {
-  view.bulkRemove(snake.points);
-  snake.reset();
-  drawFloatPoin();
-};
 
 const drawSnake = () => {
-  const head = snake.next();
-  const len = snake.points.unshift(head);
+  if (snake.active) {
+    const head = snake.next();
+    const len = snake.points.unshift(head);
 
-  if (snake.catched()) {
-    snake.size++;
-    setScope(snake.size - 1);
-    drawFloatPoin();
-  } if (len > snake.size) {
-    view.remove(snake.points.pop()!);
-  }
+    if (snake.catched()) {
+      snake.size++;
+      setScope(snake.size - 1);
+      drawFloatPoin();
+    } if (len > snake.size) {
+      view.remove(snake.points.pop()!);
+    }
 
-  if (snake.intercept()) {
-    requestAnimationFrame(start);
-  } else {
-    view.add(head);
+    if (snake.intercept()) {
+      view.bulkRemove(snake.points);
+      snake.reset();
+      drawFloatPoin();
+    } else {
+      view.add(head);
+    }
   }
 };
 
 const gameLoop = () =>
   setTimeout(() => {
-    if (snake.active) {
-      drawSnake();
-      requestAnimationFrame(gameLoop);
-    }
+    drawSnake();
+    requestAnimationFrame(gameLoop);
   }, 250);
 
 const ready = () => {
   drawFloatPoin();
   snake.right();
-  requestAnimationFrame(gameLoop);
+  gameLoop();
 };
 
 const pause = () => {
-  if (snake.active) {
-    snake.active = false;
-  } else {
-    snake.active = true;
-    requestAnimationFrame(gameLoop);
-  }
-
-  tooglePauseModal(snake.active);
+  tooglePauseModal(snake.active = !snake.active);
 };
 
 const touchEventListener: TouchEventListenerObject = {
