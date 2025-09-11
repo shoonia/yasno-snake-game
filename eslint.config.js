@@ -1,16 +1,17 @@
+import { defineConfig } from '@eslint/config-helpers';
 import js from '@eslint/js';
 import ts from 'typescript-eslint';
 import jsx from 'jsx-dom-runtime/eslint-plugin';
 
-export default ts.config(
+export default defineConfig(
   {
     ignores: [
       'dist',
     ],
   },
   js.configs.recommended,
-  ...ts.configs.recommended,
-  ...ts.configs.stylistic,
+  ts.configs.recommended,
+  ts.configs.stylistic,
   jsx,
   {
     languageOptions: {
@@ -23,13 +24,6 @@ export default ts.config(
     rules: {
       'no-else-return': 'error',
       'no-trailing-spaces': 'error',
-      indent: [
-        'error',
-        2,
-        {
-          'SwitchCase': 1,
-        },
-      ],
       quotes: [
         'error',
         'single',
@@ -41,14 +35,22 @@ export default ts.config(
       'space-before-function-paren': [
         'error',
         {
-          'anonymous': 'always',
-          'named': 'never',
-          'asyncArrow': 'always',
+          anonymous: 'always',
+          named: 'never',
+          asyncArrow: 'always',
         },
       ],
       'comma-dangle': [
         'error',
         'always-multiline',
+      ],
+      'no-multiple-empty-lines': [
+        'error',
+        {
+          max: 1,
+          maxBOF: 0,
+          maxEOF: 0,
+        },
       ],
     },
   },
