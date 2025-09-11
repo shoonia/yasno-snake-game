@@ -17,6 +17,9 @@
   width: 28px;
   height: 38px;
   border-right: var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cellg {
@@ -35,16 +38,13 @@
 .cellt {
   composes: cell;
   height: 56px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .label {
   writing-mode: vertical-rl;
   font-weight: bold;
   color: var(--cl-text);
-  font-size: 80%;
+  font-size: 70%;
 }
 
 @media (max-width: 780px) {

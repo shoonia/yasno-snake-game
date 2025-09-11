@@ -5,6 +5,7 @@ import { board } from './board';
 
 export const Time: JSX.FC = () =>
   <div class={s.row} role="presentation">
+    <div class={s.cellt} />
     {from(board.x, (i) =>
       <div class={s.cellt}>
         <span class={s.label}>

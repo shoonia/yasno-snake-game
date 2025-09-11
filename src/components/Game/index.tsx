@@ -20,7 +20,6 @@ const drawFloatPoin = () => {
   view.add(snake.float);
 };
 
-
 const drawSnake = () => {
   if (snake.active) {
     const head = snake.next();
@@ -117,15 +116,18 @@ document.addEventListener('keydown', (event) => {
 });
 
 export const Game: JSX.FC = () =>
-  <article ref={ready} class={s.game}>
+  <article ref={ready} class={s.game} role="application" aria-label="Гра змійка">
     <Time />
-    {from(board.y, () => {
+    {from(board.y, (i) => {
       const row: HTMLDivElement[] = [];
 
       view.grid.push(row);
 
       return (
         <div class={s.row}>
+          <div class={s.cell}>
+            <small>{view.day(i)}</small>
+          </div>
           {from(board.x, () =>
             <div
               ref={(div) => row.push(div)}

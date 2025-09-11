@@ -7,6 +7,7 @@ interface IView {
   add(p: IPoint): void;
   remove(p: IPoint): void
   bulkRemove(ps: IPoint[]): void
+  day(i: number): string;
 }
 
 const generator = () => {
@@ -30,5 +31,9 @@ export const view: IView = {
 
   bulkRemove(ps) {
     for (const p of ps) this.remove(p);
+  },
+
+  day(i: number) {
+    return ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'нд'][i];
   },
 };
