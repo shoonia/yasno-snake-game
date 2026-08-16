@@ -1,9 +1,9 @@
-import { useText } from 'jsx-dom-runtime';
+import { signal } from 'jsx-dom-runtime';
 
 import s from './styles.css';
 import m from '../../../static/manifest.json';
 
-const [text, setText] = useText('');
+const text = signal('');
 
 export const Share: JSX.FC = () => {
   const copy: JSX.EventListener = () => {
@@ -15,8 +15,8 @@ export const Share: JSX.FC = () => {
       });
     } else {
       navigator.clipboard?.writeText(m.scope);
-      setText('скопійовано до буфера обміну');
-      setTimeout(setText, 3000, '');
+      text.set('скопійовано до буфера обміну');
+      setTimeout(text.set, 3000, '');
     }
   };
 
