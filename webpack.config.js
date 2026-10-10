@@ -1,18 +1,18 @@
-import { resolve } from 'node:path';
 import { realpathSync } from 'node:fs';
+import { resolve } from 'node:path';
 
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import createLocalIdent from 'mini-css-class-name/css-loader';
+import autoprefixer from 'autoprefixer';
+import CopyPlugin from 'copy-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import HTMLInlineCSSWebpackPlugin from 'html-inline-css-webpack-plugin';
-import HTMLInlineScriptWebpackPlugin from 'html-inline-script-webpack-plugin';
 import CssMqpackerPlugin from 'css-mqpacker-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import CopyPlugin from 'copy-webpack-plugin';
-import autoprefixer from 'autoprefixer';
+import HTMLInlineCSSWebpackPlugin from 'html-inline-css-webpack-plugin';
+import HTMLInlineScriptWebpackPlugin from 'html-inline-script-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import createLocalIdent from 'mini-css-class-name/css-loader';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import webpack from 'webpack';
 
 import manifest from './static/manifest.json' with { type: 'json' };
 
@@ -55,11 +55,11 @@ export default ({ NODE_ENV }) => {
         new TerserPlugin({
           extractComments: false,
           terserOptions: {
-            ecma: 2020,
+            ecma: 2024,
             module: true,
             toplevel: true,
             compress: {
-              ecma: 2020,
+              ecma: 2024,
               module: true,
               comparisons: false,
               inline: 2,
@@ -97,7 +97,10 @@ export default ({ NODE_ENV }) => {
         nodeModulesDir,
       ],
       extensions: [
+        '.mjs',
+        '.cjs',
         '.js',
+        '.jsx',
         '.ts',
         '.tsx',
       ],
@@ -119,23 +122,30 @@ export default ({ NODE_ENV }) => {
               },
             },
             {
-              test: /\.tsx?$/,
-              include: srcDir,
-              loader: 'babel-loader',
-              options: {
-                cacheDirectory: isDev,
-                cacheCompression: false,
-                compact: isProd,
-                minified: isProd,
-                presets: [
-                  [
-                    '@babel/preset-typescript',
-                    {
-                      optimizeConstEnums: true,
+              test: /\.(js|mjs|cjs|jsx|ts|tsx)$/,
+              use: {
+                loader: 'swc-loader',
+                options: {
+                  sync: true,
+                  minify: isProd,
+                  jsc: {
+                    target: 'es2024',
+                    parser: {
+                      syntax: 'typescript',
+                      tsx: true,
                     },
-                  ],
-                  'jsx-dom-runtime/babel-preset',
-                ],
+                    transform: {
+                      react: {
+                        runtime: 'preserve',
+                      },
+                    },
+                    experimental: {
+                      plugins: [
+                        ['swc-jsx-dom-runtime', {}],
+                      ],
+                    },
+                  },
+                },
               },
             },
             {
@@ -232,6 +242,9 @@ export default ({ NODE_ENV }) => {
       compress: false,
       static: srcDir,
       port: 3000,
+    },
+    stats: {
+      children: true,
     },
   };
 };
