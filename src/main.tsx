@@ -1,4 +1,4 @@
-import { render } from 'jsx-dom-runtime'
+import { render } from 'jsx-dom-runtime';
 import './style.css';
 import { App } from './components/App';
 

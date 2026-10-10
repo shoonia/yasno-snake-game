@@ -1,11 +1,11 @@
-import s from './style.css';
 import { from } from '../../utils';
-import { board } from './board';
-import { Time } from './Time';
-import { Snake } from './snake';
-import { view } from './view';
-import { setScope } from '../Header/scope';
+import { scope } from '../Header/scope';
 import { tooglePauseModal } from '../PauseModal';
+import { board } from './board';
+import { Snake } from './snake';
+import s from './style.css';
+import { Time } from './Time';
+import { view } from './view';
 
 interface TouchEventListenerObject extends EventListenerObject {
   x: number;
@@ -27,7 +27,7 @@ const drawSnake = () => {
 
     if (snake.catched()) {
       snake.size++;
-      setScope(snake.size - 1);
+      scope.set(snake.size - 1);
       drawFloatPoin();
     } if (len > snake.size) {
       view.remove(snake.points.pop()!);

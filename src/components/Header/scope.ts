@@ -1,5 +1,3 @@
-import { useText } from 'jsx-dom-runtime';
+import { signal } from 'jsx-dom-runtime';
 
-const [scope, setScope] = useText<number>(0);
-
-export { scope, setScope };
+export const scope = signal<number>(0);
